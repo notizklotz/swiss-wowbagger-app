@@ -12,6 +12,9 @@ class MainViewModel : ViewModel() {
     private val _insult = MutableLiveData<String>()
     val insult: LiveData<String> = _insult
 
+    private val _insultAudioUrl = MutableLiveData<String>()
+    val insultAudioUrl: LiveData<String> = _insultAudioUrl
+
     init {
         fetchInsult()
     }
@@ -21,7 +24,9 @@ class MainViewModel : ViewModel() {
             try {
                 // Calling the repository is safe as it will move execution off
                 // the main thread
-                _insult.value = InsultRepository.getRandomInsult()
+                val randomInsult = InsultRepository.getRandomInsult()
+                _insult.value = randomInsult.text
+                _insultAudioUrl.value = randomInsult.getAudioUrl()
             } catch (error: Exception) {
                 Log.e("Wowbagger", "Could not fetch insult", error)
             }

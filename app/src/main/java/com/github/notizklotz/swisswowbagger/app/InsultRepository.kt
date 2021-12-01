@@ -4,5 +4,5 @@ object InsultRepository {
 
     private val wowbaggerApiClient = WowbaggerApi.retrofitService
 
-    suspend fun getRandomInsult() = wowbaggerApiClient.getInsult()
+    suspend fun getRandomInsult(): Insult = wowbaggerApiClient.getInsult()
 }

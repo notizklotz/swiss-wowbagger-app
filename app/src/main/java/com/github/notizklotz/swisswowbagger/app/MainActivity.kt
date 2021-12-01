@@ -1,6 +1,8 @@
 package com.github.notizklotz.swisswowbagger.app
 
 import android.content.res.Configuration
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,8 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Observer
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
 
 
@@ -26,10 +28,33 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    private var mediaPlayer: MediaPlayer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val userData = viewModel.insult.observeAsState("Ganz brav")
+
+            val insultAudioUrlObserver = Observer<String> { url ->
+                releaseMediaPlayer()
+
+                mediaPlayer = MediaPlayer().apply {
+                    setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .build()
+                    )
+                    setDataSource(url)
+                    prepareAsync()
+                    setOnPreparedListener { start() }
+                    setOnCompletionListener {
+                        release()
+                        mediaPlayer = null
+                    }
+                }
+            }
+            viewModel.insultAudioUrl.observe(this, insultAudioUrlObserver)
 
             SwissWowbaggerAppTheme {
 
@@ -47,6 +72,23 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun releaseMediaPlayer() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+    }
+
+    override fun onPause() {
+        releaseMediaPlayer()
+
+        super.onPause()
+    }
+
+    override fun onStop() {
+        releaseMediaPlayer()
+
+        super.onStop()
     }
 }
 
