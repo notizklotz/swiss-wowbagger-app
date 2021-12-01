@@ -1,0 +1,1 @@
+Die Swiss Wowbagger App sammelt keinerlei Nutzerdaten und enthält kein Tracking.
