@@ -26,8 +26,13 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.STORE_KEY_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          
-      - uses: actions/upload-artifact@v2
+      - name: GH Release
+      
+      - uses: softprops/action-gh-release@v0.1
         with:
-          name: Signed app bundle
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          prerelease: true
+          # Newline-delimited list of path globs for asset files to upload
+          files: ${{steps.sign_app.outputs.signedReleaseFile}}
+          # Fails if any of the `files` globs match nothing. Defaults to false
+          fail_on_unmatched_files: true
+          generate_release_notes: true
