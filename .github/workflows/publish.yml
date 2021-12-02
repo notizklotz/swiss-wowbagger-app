@@ -27,7 +27,7 @@ jobs:
           keyStorePassword: ${{ secrets.STORE_KEY_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
       
-      - uses: softprops/action-gh-release@v0.1
+      - uses: softprops/action-gh-release@v1
         with:
           prerelease: true
           # Newline-delimited list of path globs for asset files to upload
