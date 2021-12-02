@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -75,8 +76,12 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun releaseMediaPlayer() {
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
+        try {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+        } catch (e: Exception) {
+            Log.d("wowbagger", "releaseMediaPlayer: could not stop or release", e)
+        }
     }
 
     override fun onPause() {
