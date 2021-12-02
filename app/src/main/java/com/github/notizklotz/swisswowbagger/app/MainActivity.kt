@@ -52,10 +52,10 @@ class MainActivity : ComponentActivity() {
                         NameSelector(name.value) { viewModel.name.value = it }
                     },
                     sheetPeekHeight = 100.dp,
-                    sheetGesturesEnabled = false
+                    sheetGesturesEnabled = false,
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize().padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
@@ -193,6 +193,7 @@ fun DropDownList(
 }
 
 private val names = listOf(
+    "",
     "Ädu",
     "Andle",
     "Ändu",
