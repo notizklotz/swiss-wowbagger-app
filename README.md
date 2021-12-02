@@ -1,3 +1,5 @@
-TODO Logo: Parental Adivsory aber mit Berner Wappenfarben
+# Swiss Wowbagger App
 
-TODO: Wär die Sprach nid vertreit tuet itz gschider Röuelli dra und geit morn is Rössli a Stammtisch go zNüni näh
+Android App to generate insults in Swiss German.
+
+Based on Nidi's Swiss Wowbagger: https://nidi3.github.io/swiss-wowbagger
