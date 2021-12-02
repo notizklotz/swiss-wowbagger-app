@@ -3,4 +3,8 @@
     <string name="insult_initial">Ganz brav</string>
     <string name="insult_button_text">Beleidige!</string>
     <string name="name_label">Wär?</string>
+    <string name="appwidget_text">Irgendöpper</string>
+    <string name="configure">Konfiguriere</string>
+    <string name="add_widget">Hinzuefüege</string>
+    <string name="app_widget_description">Sofort-Beleidigung für öpper bstimmts</string>
 </resources>

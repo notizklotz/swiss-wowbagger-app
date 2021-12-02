@@ -1,10 +1,7 @@
 package com.github.notizklotz.swisswowbagger.app
 
 import android.content.res.Configuration
-import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -30,8 +27,6 @@ import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
-
-    private var mediaPlayer: MediaPlayer? = null
 
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,44 +64,20 @@ class MainActivity : ComponentActivity() {
 
     private fun createInsultAudioObserver() {
         val insultAudioUrlObserver = Observer<String> { url ->
-            releaseMediaPlayer()
-
-            mediaPlayer = MediaPlayer().apply {
-                setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .build()
-                )
-                setDataSource(url)
-                prepareAsync()
-                setOnPreparedListener { start() }
-                setOnCompletionListener {
-                    release()
-                    mediaPlayer = null
-                }
-            }
+            InsultSpeechPlayer.play(url)
         }
         viewModel.insultAudioUrl.observe(this, insultAudioUrlObserver)
     }
 
-    private fun releaseMediaPlayer() {
-        try {
-            mediaPlayer?.stop()
-            mediaPlayer?.release()
-        } catch (e: Exception) {
-            Log.d("wowbagger", "releaseMediaPlayer: could not stop or release", e)
-        }
-    }
 
     override fun onPause() {
-        releaseMediaPlayer()
+        InsultSpeechPlayer.releaseMediaPlayer()
 
         super.onPause()
     }
 
     override fun onStop() {
-        releaseMediaPlayer()
+        InsultSpeechPlayer.releaseMediaPlayer()
 
         super.onStop()
     }
