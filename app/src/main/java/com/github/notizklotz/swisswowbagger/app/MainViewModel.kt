@@ -15,10 +15,6 @@ class MainViewModel : ViewModel() {
     private val _insultAudioUrl = MutableLiveData<String>()
     val insultAudioUrl: LiveData<String> = _insultAudioUrl
 
-    init {
-        fetchInsult()
-    }
-
     fun fetchInsult() {
         viewModelScope.launch {
             try {
