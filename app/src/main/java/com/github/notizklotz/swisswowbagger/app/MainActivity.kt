@@ -12,14 +12,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,7 +54,9 @@ class MainActivity : ComponentActivity() {
                     sheetGesturesEnabled = false,
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(16.dp),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
@@ -114,10 +115,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun InsultButton(onClick: () -> Unit) {
 
+
     ExtendedFloatingActionButton(
         onClick = { onClick() },
         text = { Text(stringResource(R.string.insult_button_text)) },
-        icon = { Icon(Icons.Filled.Favorite, "") }
+        icon = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_baseline_emoji_symbols_24),
+                contentDescription = null // decorative element
+            )
+        }
     )
 }
 
@@ -144,7 +151,9 @@ fun NameSelector(name: String, onNameSelected: (String) -> Unit) {
                 value = name,
                 onValueChange = onNameSelected,
                 label = { Text(text = stringResource(R.string.name_label)) },
-                modifier = Modifier.fillMaxWidth().padding(16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
             )
             DropDownList(
                 requestToOpen = isOpen.value,
@@ -172,7 +181,10 @@ fun DropDownList(
     selectedString: (String) -> Unit
 ) {
     DropdownMenu(
-        modifier = Modifier.fillMaxWidth().fillMaxHeight(0.7f).padding(16.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.7f)
+            .padding(16.dp),
         expanded = requestToOpen,
         onDismissRequest = { request(false) },
     ) {
@@ -184,9 +196,11 @@ fun DropDownList(
                     selectedString(it)
                 }
             ) {
-                Text(it, modifier = Modifier
-                    .wrapContentWidth()
-                    .align(CenterVertically))
+                Text(
+                    it, modifier = Modifier
+                        .wrapContentWidth()
+                        .align(CenterVertically)
+                )
             }
         }
     }
