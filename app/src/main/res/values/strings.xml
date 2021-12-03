@@ -7,4 +7,7 @@
     <string name="configure">Konfiguriere</string>
     <string name="add_widget">Hinzuefüege</string>
     <string name="app_widget_description">Sofort-Beleidigung für öpper bstimmts</string>
+    <string name="title_activity_instant_insult_widget_configure">
+        Sofort-Beleidigung
+    </string>
 </resources>

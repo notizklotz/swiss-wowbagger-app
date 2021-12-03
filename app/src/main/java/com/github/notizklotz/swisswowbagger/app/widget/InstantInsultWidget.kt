@@ -1,4 +1,4 @@
-package com.github.notizklotz.swisswowbagger.app
+package com.github.notizklotz.swisswowbagger.app.widget
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
@@ -7,6 +7,8 @@ import android.widget.RemoteViews
 import android.app.PendingIntent
 
 import android.content.Intent
+import com.github.notizklotz.swisswowbagger.app.InsultSpeechPlayer
+import com.github.notizklotz.swisswowbagger.app.R
 
 /**
  * Implementation of App Widget functionality.
@@ -27,16 +29,8 @@ class InstantInsultWidget : AppWidgetProvider() {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         // When the user deletes the widget, delete the preference associated with it.
         for (appWidgetId in appWidgetIds) {
-            deleteTitlePref(context, appWidgetId)
+            InstantInsultWidgetSettingsRepository.deleteNamePref(context, appWidgetId)
         }
-    }
-
-    override fun onEnabled(context: Context) {
-        // Enter relevant functionality for when the first widget is created
-    }
-
-    override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -64,7 +58,7 @@ internal fun updateAppWidget(
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
-    val widgetText = loadTitlePref(context, appWidgetId)
+    val widgetText = InstantInsultWidgetSettingsRepository.loadNamePref(context, appWidgetId)
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.instant_insult_widget)
     views.setTextViewText(R.id.appwidget_text, widgetText)

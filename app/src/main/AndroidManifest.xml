@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SwissWowbaggerApp">
         <receiver
-            android:name=".InstantInsultWidget"
+            android:name=".widget.InstantInsultWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -24,8 +24,9 @@
         </receiver>
 
         <activity
-            android:name=".InstantInsultWidgetConfigureActivity"
-            android:exported="true">
+            android:name=".widget.InstantInsultWidgetConfigureActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SwissWowbaggerApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
