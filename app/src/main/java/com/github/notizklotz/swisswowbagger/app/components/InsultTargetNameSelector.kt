@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.github.notizklotz.swisswowbagger.app.R
 
 @Composable
-fun NameSelector(preselectedName: String, onNameSelected: (String) -> Unit) {
+fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -> Unit) {
 
     val isOpen = remember { mutableStateOf(false) }
 

@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
-import com.github.notizklotz.swisswowbagger.app.components.NameSelector
+import com.github.notizklotz.swisswowbagger.app.components.InsultTargetNameSelector
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                     floatingActionButtonPosition = FabPosition.Center,
                     sheetContent = {
                         Spacer(Modifier.height(8.dp))
-                        NameSelector(name.value) { viewModel.name.value = it }
+                        InsultTargetNameSelector(name.value) { viewModel.name.value = it }
                     },
                     sheetPeekHeight = 100.dp,
                     sheetGesturesEnabled = false,

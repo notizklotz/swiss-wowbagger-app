@@ -11,10 +11,10 @@ import com.github.notizklotz.swisswowbagger.app.InsultSpeechPlayer
 import com.github.notizklotz.swisswowbagger.app.R
 
 /**
- * Implementation of App Widget functionality.
- * App Widget Configuration implemented in [InstantInsultWidgetConfigureActivity]
+ * Widget for instantly insulting a preconfigured target name.
+ * App Widget Configuration implemented in [InsultWidgetConfigureActivity].
  */
-class InstantInsultWidget : AppWidgetProvider() {
+class InsultWidget : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -29,7 +29,7 @@ class InstantInsultWidget : AppWidgetProvider() {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         // When the user deletes the widget, delete the preference associated with it.
         for (appWidgetId in appWidgetIds) {
-            InstantInsultWidgetSettingsRepository.deleteNamePref(context, appWidgetId)
+            deleteInsultTargetName(context, appWidgetId)
         }
     }
 
@@ -49,7 +49,7 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val intent = Intent(context, InstantInsultWidget::class.java)
+    val intent = Intent(context, InsultWidget::class.java)
     intent.action = INSTANT_INSULT_PLAY
     val actionPendingIntent = PendingIntent.getBroadcast(
         context,
@@ -58,7 +58,7 @@ internal fun updateAppWidget(
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
-    val widgetText = InstantInsultWidgetSettingsRepository.loadNamePref(context, appWidgetId)
+    val widgetText = loadInsultTargetName(context, appWidgetId)
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.instant_insult_widget)
     views.setTextViewText(R.id.appwidget_text, widgetText)

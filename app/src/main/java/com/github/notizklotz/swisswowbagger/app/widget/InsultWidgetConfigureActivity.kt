@@ -14,14 +14,17 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
-import com.github.notizklotz.swisswowbagger.app.components.NameSelector
+import com.github.notizklotz.swisswowbagger.app.components.InsultTargetNameSelector
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
 
-class InstantInsultWidgetConfigureActivity : ComponentActivity() {
+/**
+ * Widget configuration screen for [InsultWidget].
+ */
+class InsultWidgetConfigureActivity : ComponentActivity() {
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
 
-    private val viewModel: InstantInsultWidgetConfigureActivityViewModel by viewModels()
+    private val viewModel: InsultWidgetConfigureActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,20 +48,19 @@ class InstantInsultWidgetConfigureActivity : ComponentActivity() {
             return
         }
 
-        viewModel.name.value =
-            InstantInsultWidgetSettingsRepository.loadNamePref(this, appWidgetId)
+        viewModel.insultTargetName.value = loadInsultTargetName(this, appWidgetId)
 
         setContent {
-            val name = viewModel.name.observeAsState("")
+            val name = viewModel.insultTargetName.observeAsState("")
 
             SwissWowbaggerAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     Column {
-                        NameSelector(
+                        InsultTargetNameSelector(
                             preselectedName = name.value,
-                            onNameSelected = { viewModel.name.value = it })
-                        TextButton(onClick = { save() }) {
+                            onNameSelected = { viewModel.insultTargetName.value = it })
+                        TextButton(onClick = { saveTargetNameAndFinishActivity() }) {
                             Text(text = "OK")
                         }
                     }
@@ -67,11 +69,11 @@ class InstantInsultWidgetConfigureActivity : ComponentActivity() {
         }
     }
 
-    private fun save() {
-        InstantInsultWidgetSettingsRepository.saveNamePref(
+    private fun saveTargetNameAndFinishActivity() {
+        saveInsultTargetName(
             this,
             appWidgetId,
-            viewModel.name.value ?: ""
+            viewModel.insultTargetName.value ?: ""
         )
 
         // It is the responsibility of the configuration activity to update the app widget
@@ -91,7 +93,7 @@ class InstantInsultWidgetConfigureActivity : ComponentActivity() {
 fun DefaultPreview() {
     SwissWowbaggerAppTheme {
         Column {
-            NameSelector(preselectedName = "", onNameSelected = {})
+            InsultTargetNameSelector(preselectedName = "", onNameSelected = {})
             TextButton(onClick = { }) {
                 Text(text = "OK")
             }
