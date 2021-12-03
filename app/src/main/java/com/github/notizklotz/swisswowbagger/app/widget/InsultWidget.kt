@@ -9,12 +9,15 @@ import android.app.PendingIntent
 import android.content.Intent
 import com.github.notizklotz.swisswowbagger.app.InsultSpeechPlayer
 import com.github.notizklotz.swisswowbagger.app.R
+import com.github.notizklotz.swisswowbagger.app.data.InsultRepository
+import kotlinx.coroutines.*
 
 /**
  * Widget for instantly insulting a preconfigured target name.
  * App Widget Configuration implemented in [InsultWidgetConfigureActivity].
  */
 class InsultWidget : AppWidgetProvider() {
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -33,16 +36,28 @@ class InsultWidget : AppWidgetProvider() {
         }
     }
 
-    override fun onReceive(context: Context?, intent: Intent?) {
-        if (intent?.action == INSTANT_INSULT_PLAY) {
-            InsultSpeechPlayer.play("https://wowbagger.schaltstelle.ch/1638460098599?format=wav&v=undefined&names=%C3%84du")
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == INTENT_ACTION_INSTANT_INSULT_PLAY) {
+
+            val appWidgetId = intent.getIntExtra(INTENT_EXTRA_APP_WIDGET_ID, -1)
+
+            if (appWidgetId != -1) {
+                val insultTargetName = loadInsultTargetName(context, appWidgetId)
+
+                runBlocking {
+                    val insult = InsultRepository.getInsult(listOf(insultTargetName))
+
+                    InsultSpeechPlayer.play(insult.getAudioUrl(listOf(insultTargetName)))
+                }
+            }
         }
 
         super.onReceive(context, intent)
     }
 }
 
-private const val INSTANT_INSULT_PLAY = "INSTANT_INSULT_PLAY"
+private const val INTENT_ACTION_INSTANT_INSULT_PLAY = "INSTANT_INSULT_PLAY"
+private const val INTENT_EXTRA_APP_WIDGET_ID = "appWidgetId"
 
 internal fun updateAppWidget(
     context: Context,
@@ -50,7 +65,9 @@ internal fun updateAppWidget(
     appWidgetId: Int
 ) {
     val intent = Intent(context, InsultWidget::class.java)
-    intent.action = INSTANT_INSULT_PLAY
+    intent.action = INTENT_ACTION_INSTANT_INSULT_PLAY
+    intent.putExtra(INTENT_EXTRA_APP_WIDGET_ID, appWidgetId)
+
     val actionPendingIntent = PendingIntent.getBroadcast(
         context,
         0,

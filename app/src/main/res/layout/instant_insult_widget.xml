@@ -7,18 +7,16 @@
 
     <ImageButton
         android:id="@+id/appwidget_button"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/widget_element_min_length"
+        android:layout_height="@dimen/widget_element_min_length"
+        android:background="?android:attr/selectableItemBackground"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_baseline_emoji_symbols_24"
+        android:src="@drawable/ic_baseline_play_circle_24"
         android:contentDescription="@string/insult_button_text"
-        android:backgroundTint="@color/yellow"
-        app:tint="@color/red"
-        />
+        app:tint="?android:attr/colorAccent" />
 
-<!--    style="@style/Widget.SwissWowbaggerApp.AppWidget.InnerView"-->
     <TextView
         android:id="@+id/appwidget_text"
         android:layout_width="match_parent"
@@ -26,6 +24,7 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/appwidget_button"
         android:text="@string/appwidget_text"
-        android:textSize="24sp"
+        style="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 </RelativeLayout>
