@@ -4,8 +4,11 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
+      
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/gradle-jdk11@0.3.0
+        with:
+          args: --all-sub-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
