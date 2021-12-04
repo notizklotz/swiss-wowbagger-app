@@ -47,6 +47,11 @@ jobs:
         with:
           report-path: build/reports/*.xml
 
+      - uses: gradle/gradle-build-action@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          arguments: bundleRelease
+
       - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
