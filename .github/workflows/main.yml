@@ -27,10 +27,7 @@ jobs:
           echo "storeFile=${{ steps.keystore.outputs.filePath }}" > ./keystore.properties
           echo "storePassword=${{ secrets.STORE_KEY_PASSWORD }}" >> ./keystore.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ./keystore.properties
-          echo "alias=${{ secrets.ALIAS }}" >> ./keystore.properties
-
-      - name: LS
-        run: ls -al
+          echo "keyAlias=${{ secrets.ALIAS }}" >> ./keystore.properties
 
       - uses: gradle/gradle-build-action@v2
         with:
