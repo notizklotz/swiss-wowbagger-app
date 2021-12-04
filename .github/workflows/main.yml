@@ -23,19 +23,11 @@ jobs:
           encodedString: ${{ secrets.SIGN_KEY }}
 
       - name: Create keystore.properties
-        uses: christian-draeger/write-properties@1.1.0
-        with:
-          path: './keystore.properties'
-          property: |
-            storeFile
-            storePassword
-            keyPassword
-            alias
-          value: |
-            ${{ steps.keystore.outputs.filePath }}
-            ${{ secrets.STORE_KEY_PASSWORD }}
-            ${{ secrets.KEY_PASSWORD }}
-            ${{ secrets.ALIAS }}
+        run: |
+          'echo storeFile=${{ steps.keystore.outputs.filePath }} >> ./keystore.properties'
+          'echo storePassword=${{ secrets.STORE_KEY_PASSWORD }} >> ./keystore.properties'
+          'echo keyPassword=${{ secrets.KEY_PASSWORD }} >> ./keystore.properties'
+          'echo alias=${{ secrets.ALIAS }} >> ./keystore.properties'
 
       - name: LS
         run: ls -al
