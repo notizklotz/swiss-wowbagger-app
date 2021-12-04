@@ -11,10 +11,11 @@ ext {
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
-if (keystorePropertiesFile.exists()) {
+if (keystorePropertiesFile.canRead()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    println 'Keystore properties loaded from file'
 } else {
-    println 'Keystore properties file not found'
+    println 'Keystore properties file not found or not readable'
 }
 println 'Keystore filepath: ' + keystoreProperties['storeFile']
 
