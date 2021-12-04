@@ -88,7 +88,7 @@ fun InsultButton(onClick: () -> Unit) {
         text = { Text(stringResource(R.string.insult_button_text)) },
         icon = {
             Icon(
-                painter = painterResource(id = R.drawable.ic_baseline_emoji_symbols_24),
+                painter = painterResource(id = R.drawable.ic_bubble_24),
                 contentDescription = null // decorative element
             )
         }

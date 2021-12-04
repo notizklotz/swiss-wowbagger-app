@@ -13,7 +13,7 @@
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_baseline_play_circle_24"
+        android:src="@drawable/ic_bubble_24"
         android:contentDescription="@string/insult_button_text"
         app:tint="?android:attr/colorAccent" />
 
