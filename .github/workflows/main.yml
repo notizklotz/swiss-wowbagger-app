@@ -23,7 +23,7 @@ jobs:
           encodedString: ${{ secrets.SIGN_KEY }}
 
       - name: Create keystore.properties
-        uses: christian-draeger/write-properties@1.1
+        uses: christian-draeger/write-properties@1.1.0
         with:
           path: './keystore.properties'
           property: |
