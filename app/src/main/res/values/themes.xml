@@ -19,10 +19,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.SwissWowbaggerApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.SwissWowbaggerApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
     <style name="Theme.SwissWowbaggerApp.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
         <item name="appWidgetRadius">8dp</item>
         <item name="appWidgetPadding">4dp</item>
