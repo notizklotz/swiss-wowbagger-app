@@ -13,7 +13,10 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else {
+    println 'Keystore properties file not found'
 }
+println 'Keystore filepath: ' + keystoreProperties['storeFile']
 
 android {
     signingConfigs {

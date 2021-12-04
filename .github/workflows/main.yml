@@ -37,6 +37,9 @@ jobs:
             ${{ secrets.KEY_PASSWORD }}
             ${{ secrets.ALIAS }}
 
+      - name: LS
+        run: ls -al
+
       - uses: gradle/gradle-build-action@v2
         with:
           arguments: build
