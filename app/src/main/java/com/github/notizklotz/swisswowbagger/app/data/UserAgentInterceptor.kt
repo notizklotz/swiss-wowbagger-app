@@ -13,7 +13,7 @@ import okhttp3.Response
  */
 class UserAgentInterceptor(context: Context) : Interceptor {
 
-    private val userAgent = run {
+    internal val userAgent = run {
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         val versionName = try {
             packageInfo.versionName
