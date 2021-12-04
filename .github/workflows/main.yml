@@ -39,13 +39,13 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: test-results/**/*.xml
+          files: ./app/build/test-results/**/*.xml
 
       - name: GitHub Action for Android Lint
         uses: yutailang0119/action-android-lint@v2.0.0
         if: always()
         with:
-          report-path: build/reports/*.xml
+          report-path: ./app/build/reports/lint-results-debug.xml
 
       - uses: gradle/gradle-build-action@v2
         if: startsWith(github.ref, 'refs/tags/')
