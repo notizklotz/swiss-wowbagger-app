@@ -1,4 +1,4 @@
-package com.github.notizklotz.swisswowbagger.app
+package com.github.notizklotz.swisswowbagger.app.data
 
 object InsultRepository {
 
