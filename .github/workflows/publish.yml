@@ -19,7 +19,7 @@ jobs:
           encodedString: ${{ secrets.SIGN_KEY }}
 
       - name: Create keystore.properties
-      - run: |
+        run: |
           echo "storeFile=${{ steps.keystore.outputs.filePath }}" >> keystore.properties
           echo "storePassword=${{ secrets.STORE_KEY_PASSWORD }}" >> keystore.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
