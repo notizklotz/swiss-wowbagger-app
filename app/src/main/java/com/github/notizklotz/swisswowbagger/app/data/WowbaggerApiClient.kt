@@ -5,10 +5,14 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
+
 
 const val wowbaggerBaseUrl = "https://swiss-wowbagger-ultgi7by3q-oa.a.run.app"
 private val retrofit = Retrofit.Builder()
     .baseUrl(wowbaggerBaseUrl)
+    .client(OkHttpClient.Builder().callTimeout(5, TimeUnit.SECONDS).build())
     .addConverterFactory(MoshiConverterFactory.create())
     .build()
 
