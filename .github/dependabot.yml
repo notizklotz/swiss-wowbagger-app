@@ -9,6 +9,8 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: org.jetbrains.kotlin:kotlin-gradle-plugin # Must be compatible with compose version
 
   - package-ecosystem: "github-actions"
     directory: "/"
