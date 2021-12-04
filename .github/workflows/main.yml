@@ -35,6 +35,18 @@ jobs:
         with:
           arguments: build bundleRelease
 
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: test-results/**/*.xml
+
+      - name: GitHub Action for Android Lint
+        uses: yutailang0119/action-android-lint@v2.0.0
+        if: always()
+        with:
+          report-path: build/reports/*.xml
+
       - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
