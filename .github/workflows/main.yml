@@ -15,6 +15,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Get signing keystore from secrets
+        uses: timheuer/base64-to-file@v1.1
+        id: keystore
+        with:
+          fileName: 'wowbagger-app.jks'
+          encodedString: ${{ secrets.SIGN_KEY }}
+
+      - name: Create keystore.properties
+        run: |
+          echo "storeFile=${{ steps.keystore.outputs.filePath }}" >> keystore.properties
+          echo "storePassword=${{ secrets.STORE_KEY_PASSWORD }}" >> keystore.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> keystore.properties
+          echo "alias=${{ secrets.ALIAS }}" >> keystore.properties
+
       - uses: gradle/gradle-build-action@v2
         with:
           arguments: build

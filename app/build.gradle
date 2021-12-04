@@ -11,10 +11,6 @@ ext {
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
-keystoreProperties.setProperty('storeFile', 'dummy')
-keystoreProperties.setProperty('storePassword', 'dummy')
-keystoreProperties.setProperty('keyPassword', 'dummy')
-keystoreProperties.setProperty('keyAlias', 'dummy')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
