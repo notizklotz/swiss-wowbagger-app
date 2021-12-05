@@ -71,7 +71,7 @@ android {
         }
     }
     appVersioning {
-        releaseBuildOnly.set(true)
+        fetchTagsWhenNoneExistsLocally = true
     }
     testOptions {
         unitTests {
