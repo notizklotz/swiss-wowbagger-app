@@ -16,6 +16,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Get signing keystore from secrets
         uses: timheuer/base64-to-file@v1.1
