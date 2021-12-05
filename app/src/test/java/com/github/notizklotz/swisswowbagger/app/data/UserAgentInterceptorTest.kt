@@ -14,11 +14,10 @@ class UserAgentInterceptorTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     @Test
-    @Ignore("Must find a way to shadow the values")
     fun testUserAgentString() {
         val userAgentInterceptor = UserAgentInterceptor(context)
 
         assertThat(userAgentInterceptor.userAgent)
-            .isEqualTo("wowbagger-android/0.4.0 (robolectric; robolectric; SDK 31; Android 12)")
+            .matches("wowbagger-android/\\d.\\d.\\d \\(robolectric; robolectric; SDK 31; Android 12\\)")
     }
 }
