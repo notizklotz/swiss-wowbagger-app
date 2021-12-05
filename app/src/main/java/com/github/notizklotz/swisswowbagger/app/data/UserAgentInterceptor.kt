@@ -3,6 +3,7 @@ package com.github.notizklotz.swisswowbagger.app.data
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import androidx.annotation.VisibleForTesting
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -13,6 +14,7 @@ import okhttp3.Response
  */
 class UserAgentInterceptor(context: Context) : Interceptor {
 
+    @VisibleForTesting
     internal val userAgent = run {
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         val versionName = try {

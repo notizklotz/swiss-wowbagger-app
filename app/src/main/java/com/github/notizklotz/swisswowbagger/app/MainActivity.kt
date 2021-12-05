@@ -5,9 +5,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
+import androidx.test.espresso.IdlingResource
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.github.notizklotz.swisswowbagger.app.components.InsultTargetNameSelector
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
 
@@ -25,18 +28,26 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    private var fetchInsultIdlingResource: CountingIdlingResource? = null
+
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val userData = viewModel.insult.observeAsState(getString(R.string.insult_initial))
+            val insult = viewModel.insult.observeAsState(getString(R.string.insult_initial))
+            viewModel.insult.observe(this) {
+                fetchInsultIdlingResource?.decrement()
+            }
             val name = viewModel.name.observeAsState("")
 
             createInsultAudioObserver()
 
             SwissWowbaggerAppTheme {
                 BottomSheetScaffold(
-                    floatingActionButton = { InsultButton { viewModel.fetchInsult() } },
+                    floatingActionButton = { InsultButton {
+                        fetchInsultIdlingResource?.increment()
+                        viewModel.fetchInsult()
+                    } },
                     floatingActionButtonPosition = FabPosition.Center,
                     sheetContent = {
                         Spacer(Modifier.height(8.dp))
@@ -52,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        InsultText(userData.value)
+                        InsultText(insult.value)
                     }
                 }
             }
@@ -78,6 +89,15 @@ class MainActivity : ComponentActivity() {
 
         super.onStop()
     }
+
+    @VisibleForTesting
+    internal fun getIdlingResource(): IdlingResource {
+        if (fetchInsultIdlingResource == null) {
+            fetchInsultIdlingResource = CountingIdlingResource("insultfetch")
+        }
+        return fetchInsultIdlingResource!!
+    }
+
 }
 
 @Composable
