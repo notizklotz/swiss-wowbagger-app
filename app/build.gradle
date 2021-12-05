@@ -71,7 +71,7 @@ android {
         }
     }
     appVersioning {
-        fetchTagsWhenNoneExistsLocally = true
+        fetchTagsWhenNoneExistsLocally.set(true)
     }
     testOptions {
         unitTests {
