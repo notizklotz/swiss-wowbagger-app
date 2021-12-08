@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:export-filename="/home/notizklotz/Downloads/Rastergrafik.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="zensur.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.74297138"
+     inkscape:cx="45.762193"
+     inkscape:cy="560.58687"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g50796-7" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Text">
+    <g
+       id="g50796"
+       transform="matrix(1.4205089,0,0,1.3670988,-13.161114,-31.6418)">
+      <rect
+         style="fill:#ff7111;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+         id="rect10418"
+         width="60.320473"
+         height="12.888991"
+         x="38.328247"
+         y="83.658455"
+         transform="rotate(4.1168925)" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+         x="41.43977"
+         y="94.165642"
+         id="text5709"
+         transform="rotate(4.1168925)"><tspan
+           sodipodi:role="line"
+           id="tspan5707"
+           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+           x="41.43977"
+           y="94.165642">Üüüüh du!</tspan></text>
+    </g>
+    <g
+       id="g50796-7"
+       transform="matrix(1.4172197,-0.09661206,0.09297952,1.3639333,-20.548926,59.410691)">
+      <g
+         id="g71187"
+         transform="matrix(0.99989663,0.01493954,-0.01383723,0.99989663,1.3294932,-1.0726816)">
+        <rect
+           style="fill:#ff7111;fill-opacity:1;stroke:none;stroke-width:0.307703;stroke-opacity:1"
+           id="rect10418-8"
+           width="81.583679"
+           height="12.889056"
+           x="38.544056"
+           y="83.670067"
+           transform="matrix(0.99744091,0.07149568,-0.07402054,0.99725672,0,0)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+           x="41.43977"
+           y="94.165642"
+           id="text5709-6"
+           transform="rotate(4.1168925)"><tspan
+             sodipodi:role="line"
+             id="tspan5707-8"
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+             x="41.43977"
+             y="94.165642">scho chli fiis...</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g50796-4"
+       transform="matrix(1.4170309,-0.09934263,0.09560742,1.3637516,-15.080632,18.488469)">
+      <g
+         id="g66157"
+         transform="matrix(0.99986113,-0.01731591,0.01603826,0.99986113,-1.5402583,1.3368062)">
+        <rect
+           style="fill:#ff7111;fill-opacity:1;stroke:none;stroke-width:0.365421;stroke-opacity:1"
+           id="rect10418-4"
+           width="115.06024"
+           height="12.889052"
+           x="26.010456"
+           y="84.483948"
+           transform="matrix(0.99739009,0.07220118,-0.07585065,0.99711919,0,0)" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+           x="28.725645"
+           y="95.001076"
+           id="text5709-3"
+           transform="rotate(4.1168925)"><tspan
+             sodipodi:role="line"
+             id="tspan5707-0"
+             style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+             x="28.725645"
+             y="95.001076">zStrub für im Store...</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>
