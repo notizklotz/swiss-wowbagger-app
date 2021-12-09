@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Swiss Wowbagger App"
 include ':app'
+include ':macrobenchmark'

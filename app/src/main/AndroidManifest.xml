@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SwissWowbaggerApp">
+
         <receiver
             android:name=".widget.InsultWidget"
             android:exported="false">
@@ -43,6 +44,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <!-- Used in macrobenchmark-->
+                <action android:name="com.github.notizklotz.swisswowbagger.app.MAIN_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <provider
@@ -54,6 +60,7 @@
                 android:value="androidx.startup" />
         </provider>
 
+        <profileable android:shell="true" tools:targetApi="q" />
     </application>
 
 </manifest>
