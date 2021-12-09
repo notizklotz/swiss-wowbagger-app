@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="yellow">#FFffeb3b</color>
+    <color name="yellow_dark">#FFc8b900</color>
     <color name="red">#FFc62828</color>
     <color name="red_dark">#FF8e0000</color>
 

@@ -1,92 +1,60 @@
 package com.github.notizklotz.swisswowbagger.app.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import com.github.notizklotz.swisswowbagger.app.R
 
+/**
+ * [Code source](https://github.com/androidx/androidx/blob/androidx-main/compose/material/material/samples/src/main/java/androidx/compose/material/samples/ExposedDropdownMenuSamples.kt)
+ */
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -> Unit) {
-
-    val isOpen = remember { mutableStateOf(false) }
-
-    val openCloseOfDropDownList: (Boolean) -> Unit = {
-        isOpen.value = it
-    }
-    Box {
-        Column {
-            OutlinedTextField(
-                value = preselectedName,
-                onValueChange = {},
-                label = { Text(text = stringResource(R.string.name_label)) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            )
-            DropDownList(
-                requestToOpen = isOpen.value,
-                list = names,
-                request = openCloseOfDropDownList,
-                onEntrySelected = onNameSelected
-            )
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOptionText by remember { mutableStateOf(preselectedName) }
+    // We want to react on tap/press on TextField to show menu
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = {
+            expanded = !expanded
         }
-        Spacer(
-            modifier = Modifier
-                .matchParentSize()
-                .background(Color.Transparent)
-                .padding(10.dp)
-                .clickable { isOpen.value = true }
-
-        )
-    }
-}
-
-@Composable
-fun DropDownList(
-    requestToOpen: Boolean = false,
-    list: List<String>,
-    request: (Boolean) -> Unit,
-    onEntrySelected: (String) -> Unit
-) {
-    DropdownMenu(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.7f)
-            .padding(16.dp),
-        expanded = requestToOpen,
-        onDismissRequest = { request(false) },
     ) {
-        list.forEach {
-            DropdownMenuItem(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = {
-                    request(false)
-                    onEntrySelected(it)
-                }
-            ) {
-                Text(
-                    it, modifier = Modifier
-                        .wrapContentWidth()
-                        .align(Alignment.CenterVertically)
+        TextField(
+            readOnly = true,
+            value = selectedOptionText,
+            onValueChange = { },
+            label = { Text("Wär?") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
                 )
+            },
+            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            modifier = Modifier.fillMaxWidth()
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+            }
+        ) {
+            names.forEach { selectionOption ->
+                DropdownMenuItem(
+                    onClick = {
+                        selectedOptionText = selectionOption
+                        expanded = false
+                        onNameSelected(selectionOption)
+                    }
+                ) {
+                    Text(text = selectionOption)
+                }
             }
         }
     }
 }
 
-private val names = listOf(
+internal val names = listOf(
     "",
     "Ädu",
     "Andle",

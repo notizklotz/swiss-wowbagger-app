@@ -50,8 +50,13 @@ class MainActivity : ComponentActivity() {
                     } },
                     floatingActionButtonPosition = FabPosition.Center,
                     sheetContent = {
-                        Spacer(Modifier.height(8.dp))
-                        InsultTargetNameSelector(name.value) { viewModel.name.value = it }
+                        Spacer(Modifier.height(32.dp))
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                        ) {
+                            InsultTargetNameSelector(name.value) { viewModel.name.value = it }
+                        }
                     },
                     sheetPeekHeight = 100.dp,
                     sheetGesturesEnabled = false,
