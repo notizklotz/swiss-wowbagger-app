@@ -22,7 +22,9 @@ import androidx.lifecycle.Observer
 import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.idling.CountingIdlingResource
 import com.github.notizklotz.swisswowbagger.app.components.InsultTargetNameSelector
+import com.github.notizklotz.swisswowbagger.app.ui.theme.Red
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
+import com.github.notizklotz.swisswowbagger.app.ui.theme.Yellow
 
 class MainActivity : ComponentActivity() {
 
@@ -124,7 +126,7 @@ fun InsultButton(onClick: () -> Unit) {
 fun InsultText(text: String) {
     Text(
         text = text,
-        color = MaterialTheme.colors.primary,
+        color = if (MaterialTheme.colors.isLight) Red else Yellow,
         textAlign = TextAlign.Center,
         fontSize = 30.sp,
     )
