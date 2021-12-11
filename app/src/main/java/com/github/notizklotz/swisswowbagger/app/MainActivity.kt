@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             val insult = viewModel.insult.observeAsState(getString(R.string.insult_initial))
             viewModel.insult.observe(this) {
@@ -46,22 +47,30 @@ class MainActivity : ComponentActivity() {
 
             SwissWowbaggerAppTheme {
                 BottomSheetScaffold(
-                    floatingActionButton = { InsultButton {
-                        fetchInsultIdlingResource?.increment()
-                        viewModel.fetchInsult()
-                    } },
-                    floatingActionButtonPosition = FabPosition.Center,
-                    sheetContent = {
-                        Spacer(Modifier.height(32.dp))
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
-                        ) {
-                            InsultTargetNameSelector(name.value) { viewModel.name.value = it }
+                    scaffoldState = rememberBottomSheetScaffoldState(
+                        bottomSheetState = rememberBottomSheetState(
+                            BottomSheetValue.Expanded
+                        )
+                    ),
+                    floatingActionButton = {
+                        InsultButton {
+                            fetchInsultIdlingResource?.increment()
+                            viewModel.fetchInsult()
                         }
                     },
-                    sheetPeekHeight = 100.dp,
-                    sheetGesturesEnabled = false,
+                    floatingActionButtonPosition = FabPosition.Center,
+                    sheetContent = {
+                        Spacer(Modifier.height(fabHeightInSheet))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
+                            InsultTargetNameSelector(name.value ?: "") {
+                                viewModel.name.value = it
+                            }
+                        }
+                    },
                 ) {
                     Column(
                         modifier = Modifier
@@ -106,6 +115,9 @@ class MainActivity : ComponentActivity() {
     }
 
 }
+
+// FloatingActionButton.ExtendedFabSize
+private val fabHeightInSheet = 48.dp / 2
 
 @Composable
 fun InsultButton(onClick: () -> Unit) {

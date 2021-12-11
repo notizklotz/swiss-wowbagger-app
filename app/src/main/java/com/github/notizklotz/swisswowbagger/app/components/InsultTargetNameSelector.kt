@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 
 /**
  * [Code source](https://github.com/androidx/androidx/blob/androidx-main/compose/material/material/samples/src/main/java/androidx/compose/material/samples/ExposedDropdownMenuSamples.kt)
@@ -17,13 +18,15 @@ fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
-            expanded = !expanded
+            expanded = if (selectedOptionText.isNotBlank()) !expanded else expanded
         }
     ) {
         TextField(
-            readOnly = true,
             value = selectedOptionText,
-            onValueChange = { },
+            onValueChange = {
+                selectedOptionText = it
+                expanded = true
+            },
             label = { Text("Wär?") },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
@@ -31,23 +34,35 @@ fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -
                 )
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
         )
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = {
-                expanded = false
+
+        val filteringOptions =
+            names.filter {
+                it.contains(selectedOptionText, ignoreCase = true)
             }
-        ) {
-            names.forEach { selectionOption ->
-                DropdownMenuItem(
-                    onClick = {
-                        selectedOptionText = selectionOption
-                        expanded = false
-                        onNameSelected(selectionOption)
+
+        if (filteringOptions.isNotEmpty()) {
+            val focusManager = LocalFocusManager.current
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = {
+                    expanded = false
+                },
+            ) {
+                filteringOptions.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        onClick = {
+                            selectedOptionText = selectionOption
+                            expanded = false
+                            focusManager.clearFocus()
+                            onNameSelected(selectionOption)
+                        }
+                    ) {
+                        Text(text = selectionOption)
                     }
-                ) {
-                    Text(text = selectionOption)
                 }
             }
         }
