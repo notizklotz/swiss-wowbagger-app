@@ -6,12 +6,13 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.github.notizklotz.swisswowbagger.app.components.TEST_TAG_INSULT_TARGET_NAME
 import com.google.common.truth.Truth.assertWithMessage
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.After
-import org.junit.Before
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -24,15 +25,32 @@ class PlayInsultsTest {
     private var playInsultIdlingResource: IdlingResource? = null
 
     @Test
-    fun clickOnInsult() {
+    fun insultWithNoNameSelected() {
         // Precondition
-        composeTestRule.onNodeWithText("Ganz brav").assertExists()
+        composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TEXT).assertTextEquals("Ganz brav")
 
         // Execute
         composeTestRule.onNodeWithText("Beleidige!").performClick()
 
         // Verify
-        composeTestRule.onNodeWithText("Ganz brav").assertDoesNotExist()
+        composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TEXT).assert(hasTextExactly("Ganz brav").not())
+
+        assertWithMessage("Media player did not play")
+            .that(InsultSpeechPlayer.playCount).isEqualTo(1)
+    }
+
+    @Test
+    fun insultWithSelectedName() {
+        // Precondition
+        composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TEXT).assertTextEquals("Ganz brav")
+
+        composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TARGET_NAME).performClick().performTextInput("Ädu")
+
+        // Execute
+        composeTestRule.onNodeWithText("Beleidige!").performClick()
+
+        // Verify
+        composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TEXT).assertTextContains("Ädu", substring = true)
 
         assertWithMessage("Media player did not play")
             .that(InsultSpeechPlayer.playCount).isEqualTo(1)

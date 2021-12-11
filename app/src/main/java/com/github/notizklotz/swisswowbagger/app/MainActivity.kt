@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -141,8 +142,10 @@ fun InsultText(text: String) {
         color = if (MaterialTheme.colors.isLight) Red else Yellow,
         textAlign = TextAlign.Center,
         fontSize = 30.sp,
+        modifier = Modifier.testTag(TEST_TAG_INSULT_TEXT)
     )
 }
+const val TEST_TAG_INSULT_TEXT = "InsultText"
 
 @Preview(name = "Light Theme", showBackground = true)
 @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)

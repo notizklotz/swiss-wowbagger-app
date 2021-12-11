@@ -5,6 +5,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 
 /**
  * [Code source](https://github.com/androidx/androidx/blob/androidx-main/compose/material/material/samples/src/main/java/androidx/compose/material/samples/ExposedDropdownMenuSamples.kt)
@@ -26,6 +27,7 @@ fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -
             onValueChange = {
                 selectedOptionText = it
                 expanded = true
+                onNameSelected(selectedOptionText)
             },
             label = { Text("Wär?") },
             trailingIcon = {
@@ -34,8 +36,13 @@ fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -
                 )
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            modifier = Modifier.testTag(TEST_TAG_INSULT_TARGET_NAME).fillMaxWidth(),
+            singleLine = true,
+//            keyboardActions = KeyboardActions(
+//                onDone = {
+//                    focusManager.clearFocus()
+//                }
+//            )
         )
 
         val filteringOptions =
@@ -68,6 +75,8 @@ fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -
         }
     }
 }
+
+const val TEST_TAG_INSULT_TARGET_NAME = "InsultTargetName"
 
 internal val names = listOf(
     "",
