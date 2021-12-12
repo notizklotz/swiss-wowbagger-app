@@ -33,9 +33,10 @@ jobs:
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ./keystore.properties
           echo "keyAlias=${{ secrets.ALIAS }}" >> ./keystore.properties
 
-      - uses: gradle/gradle-build-action@v2
+      - name: Build app
+        uses: gradle/gradle-build-action@v2
         with:
-          arguments: build
+          arguments: clean build assemble assembleAndroidTest bundle
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
@@ -56,25 +57,15 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-      - name: Build instrumented tests artefacts
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: :app:assembleDebug :app:assembleDebugAndroidTest
-
       - name: Run instrumented tests
         run: |
           gcloud firebase test android run \
           --type instrumentation \
-          --app app/build/outputs/apk/debug/app-debug.apk \
+          --app app/build/outputs/apk/release/app-release.apk \
           --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
           --device model=Nexus4,version=21,locale=de,orientation=portrait  \
           --device model=heroqlteue,version=26,locale=en,orientation=portrait \
           --device model=Pixel3,version=30,locale=de,orientation=landscape
-
-      - uses: gradle/gradle-build-action@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          arguments: bundleRelease
 
       - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
