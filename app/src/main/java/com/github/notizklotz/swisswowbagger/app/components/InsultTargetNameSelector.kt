@@ -6,6 +6,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import com.github.notizklotz.swisswowbagger.app.R
 
 /**
  * [Code source](https://github.com/androidx/androidx/blob/androidx-main/compose/material/material/samples/src/main/java/androidx/compose/material/samples/ExposedDropdownMenuSamples.kt)
@@ -29,7 +31,7 @@ fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -
                 expanded = true
                 onNameSelected(selectedOptionText)
             },
-            label = { Text("Wär?") },
+            label = { Text(stringResource(R.string.name_label)) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded

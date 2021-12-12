@@ -1,14 +1,13 @@
 package com.github.notizklotz.swisswowbagger.app.widget
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.Context
-import android.widget.RemoteViews
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
-
+import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.widget.RemoteViews
 import com.github.notizklotz.swisswowbagger.app.InsultSpeechPlayer
 import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.data.InsultRepository
@@ -105,7 +104,7 @@ internal fun updateAppWidget(
     val widgetText = loadInsultTargetName(context, appWidgetId)
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.instant_insult_widget)
-    views.setTextViewText(R.id.appwidget_text, widgetText)
+    views.setTextViewText(R.id.appwidget_button, widgetText)
     views.setOnClickPendingIntent(R.id.appwidget_button, actionPendingIntent)
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)

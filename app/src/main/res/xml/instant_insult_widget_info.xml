@@ -10,7 +10,7 @@
     android:previewImage="@drawable/insult_widget_preview"
     android:previewLayout="@layout/instant_insult_widget"
     android:resizeMode="horizontal"
-    android:targetCellWidth="3"
+    android:targetCellWidth="2"
     android:targetCellHeight="1"
     android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"
