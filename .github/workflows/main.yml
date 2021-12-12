@@ -67,7 +67,7 @@ jobs:
           --device model=heroqlteue,version=26,locale=en,orientation=portrait \
           --device model=Pixel3,version=30,locale=de,orientation=landscape
 
-      - uses: softprops/action-gh-release@1
+      - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: false
