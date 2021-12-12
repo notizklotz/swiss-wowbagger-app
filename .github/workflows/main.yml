@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.4
         with:
           fetch-depth: 0
 
@@ -34,18 +34,18 @@ jobs:
           echo "keyAlias=${{ secrets.ALIAS }}" >> ./keystore.properties
 
       - name: Build app
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.0
         with:
           arguments: clean build assemble assembleAndroidTest bundle
 
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
+        uses: EnricoMi/publish-unit-test-result-action@v1.25
         if: always()
         with:
           files: ./app/build/test-results/**/*.xml
 
       - name: GitHub Action for Android Lint
-        uses: yutailang0119/action-android-lint@v2.0.0
+        uses: yutailang0119/action-android-lint@v2.0
         if: always()
         with:
           report-path: ./app/build/reports/lint-results-debug.xml
@@ -67,7 +67,7 @@ jobs:
           --device model=heroqlteue,version=26,locale=en,orientation=portrait \
           --device model=Pixel3,version=30,locale=de,orientation=landscape
 
-      - uses: softprops/action-gh-release@v1
+      - uses: softprops/action-gh-release@v1.1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           prerelease: false
