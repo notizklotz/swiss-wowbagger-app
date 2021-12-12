@@ -51,7 +51,7 @@ jobs:
           report-path: ./app/build/reports/lint-results-debug.xml
 
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.2.0
+        uses: google-github-actions/setup-gcloud@v0.3
         with:
           project_id: swiss-wowbagger-app
           service_account_key: ${{ secrets.GCP_SA_KEY }}
