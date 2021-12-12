@@ -14,9 +14,9 @@ import com.github.notizklotz.swisswowbagger.app.R
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -> Unit) {
+fun InsultTargetNameSelector(name: String, onNameChange: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(preselectedName) }
+    var selectedOptionText by remember { mutableStateOf(name) }
     // We want to react on tap/press on TextField to show menu
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -29,7 +29,7 @@ fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -
             onValueChange = {
                 selectedOptionText = it
                 expanded = true
-                onNameSelected(selectedOptionText)
+                onNameChange(selectedOptionText)
             },
             label = { Text(stringResource(R.string.name_label)) },
             trailingIcon = {
@@ -67,7 +67,7 @@ fun InsultTargetNameSelector(preselectedName: String, onNameSelected: (String) -
                             selectedOptionText = selectionOption
                             expanded = false
                             focusManager.clearFocus()
-                            onNameSelected(selectionOption)
+                            onNameChange(selectionOption)
                         }
                     ) {
                         Text(text = selectionOption)

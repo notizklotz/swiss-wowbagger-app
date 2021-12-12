@@ -1,7 +1,6 @@
 package com.github.notizklotz.swisswowbagger.app.widget
 
 import android.content.Context
-import com.github.notizklotz.swisswowbagger.app.R
 
 
 private const val PREFS_NAME = "com.github.notizklotz.swisswowbagger.app.widget.InsultWidget"
@@ -15,8 +14,7 @@ internal fun saveInsultTargetName(context: Context, appWidgetId: Int, text: Stri
 
 internal fun loadInsultTargetName(context: Context, appWidgetId: Int): String {
     val prefs = context.getSharedPreferences(PREFS_NAME, 0)
-    val nameValue = prefs.getString("$PREF_PREFIX_KEY$appWidgetId", null)
-    return nameValue ?: context.getString(R.string.appwidget_text)
+    return prefs.getString("$PREF_PREFIX_KEY$appWidgetId", null) ?: ""
 }
 
 internal fun deleteInsultTargetName(context: Context, appWidgetId: Int) {

@@ -1,6 +1,8 @@
 package com.github.notizklotz.swisswowbagger.app.widget
 
 import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
+import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,17 +14,17 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.components.InsultTargetNameSelector
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 /**
  * Widget configuration screen for [InsultWidget].
  */
 class InsultWidgetConfigureActivity : ComponentActivity() {
-
-    private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
 
     private val viewModel: InsultWidgetConfigureActivityViewModel by viewModels()
 
@@ -34,46 +36,33 @@ class InsultWidgetConfigureActivity : ComponentActivity() {
         setResult(RESULT_CANCELED)
 
         // Find the widget id from the intent.
-        val intent = intent
-        val extras = intent.extras
-        if (extras != null) {
-            appWidgetId = extras.getInt(
-                AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID
-            )
-        }
+        val appWidgetId = intent.extras?.getInt(EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID)
+            ?: INVALID_APPWIDGET_ID
 
         // If this activity was started with an intent without an app widget ID, finish with an error.
-        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        if (appWidgetId == INVALID_APPWIDGET_ID) {
             finish()
             return
         }
 
-        viewModel.insultTargetName.value = loadInsultTargetName(this, appWidgetId)
+        viewModel.insultTargetName.value =  loadInsultTargetName(this, appWidgetId)
 
         setContent {
-            val name = viewModel.insultTargetName.observeAsState("")
-
-            SwissWowbaggerAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Column {
-                        InsultTargetNameSelector(
-                            preselectedName = name.value,
-                            onNameSelected = { viewModel.insultTargetName.value = it })
-                        TextButton(onClick = { saveTargetNameAndFinishActivity() }) {
-                            Text(text = "OK")
-                        }
-                    }
-                }
-            }
+            WidgetConfigureForm(
+                name = viewModel.insultTargetName.value,
+                appWidgetId = appWidgetId,
+                onNameChange = { viewModel.insultTargetName.value = it },
+                onNameConfirm = { saveTargetNameAndFinishActivity(it) }
+            )
         }
     }
 
-    private fun saveTargetNameAndFinishActivity() {
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun saveTargetNameAndFinishActivity(appWidgetId: Int) {
         saveInsultTargetName(
             this,
             appWidgetId,
-            viewModel.insultTargetName.value ?: ""
+            viewModel.insultTargetName.value
         )
 
         // It is the responsibility of the configuration activity to update the app widget
@@ -82,21 +71,41 @@ class InsultWidgetConfigureActivity : ComponentActivity() {
 
         // Make sure we pass back the original appWidgetId
         val resultValue = Intent()
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+        resultValue.putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
         setResult(RESULT_OK, resultValue)
         finish()
+    }
+}
+
+@Composable
+private fun WidgetConfigureForm(
+    name: String,
+    appWidgetId: Int,
+    onNameChange: (name: String) -> Unit,
+    onNameConfirm: (appWidgetId: Int) -> Unit
+) {
+    SwissWowbaggerAppTheme {
+        Surface(color = MaterialTheme.colors.background) {
+            Column {
+                InsultTargetNameSelector(
+                    name = name,
+                    onNameChange = onNameChange
+                )
+                TextButton(onClick = { onNameConfirm(appWidgetId) }) {
+                    Text(text = stringResource(R.string.ok))
+                }
+            }
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    SwissWowbaggerAppTheme {
-        Column {
-            InsultTargetNameSelector(preselectedName = "", onNameSelected = {})
-            TextButton(onClick = { }) {
-                Text(text = "OK")
-            }
-        }
-    }
+    WidgetConfigureForm(
+        name = "Ädu",
+        appWidgetId = 0,
+        onNameChange = { },
+        onNameConfirm = { }
+    )
 }

@@ -1,8 +1,8 @@
 package com.github.notizklotz.swisswowbagger.app.widget
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
 class InsultWidgetConfigureActivityViewModel: ViewModel() {
-    val insultTargetName = MutableLiveData("")
+    val insultTargetName = mutableStateOf("")
 }
