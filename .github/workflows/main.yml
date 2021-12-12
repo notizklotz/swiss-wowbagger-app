@@ -50,12 +50,10 @@ jobs:
         with:
           report-path: ./app/build/reports/lint-results-debug.xml
 
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.3.0
+      - id: Cloud SDK auth
+        uses: google-github-actions/auth@v0.4.3
         with:
-          project_id: swiss-wowbagger-app
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Run instrumented tests
         run: |
