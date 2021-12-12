@@ -42,7 +42,7 @@ class InsultWidget : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == INTENT_ACTION_INSTANT_INSULT_PLAY) {
-            val appWidgetId = intent.getIntExtra(INTENT_EXTRA_APP_WIDGET_ID, -1)
+            val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
             if (appWidgetId != -1) {
                 playInsult(context, appWidgetId)
             }
@@ -52,6 +52,7 @@ class InsultWidget : AppWidgetProvider() {
     }
 
     private fun playInsult(context: Context, appWidgetId: Int) {
+
         coroutineScope.launch {
             val insultTargetName = loadInsultTargetName(context, appWidgetId)
 
@@ -63,7 +64,6 @@ class InsultWidget : AppWidgetProvider() {
 }
 
 private const val INTENT_ACTION_INSTANT_INSULT_PLAY = "INSTANT_INSULT_PLAY"
-private const val INTENT_EXTRA_APP_WIDGET_ID = "appWidgetId"
 
 internal fun updateAppWidget(
     context: Context,
@@ -72,17 +72,15 @@ internal fun updateAppWidget(
 ) {
     val intent = Intent(context, InsultWidget::class.java)
     intent.action = INTENT_ACTION_INSTANT_INSULT_PLAY
-    intent.putExtra(INTENT_EXTRA_APP_WIDGET_ID, appWidgetId)
+    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
 
     val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    } else {
-        PendingIntent.FLAG_UPDATE_CURRENT
-    }
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
+    } else PendingIntent.FLAG_CANCEL_CURRENT
 
     val actionPendingIntent = PendingIntent.getBroadcast(
         context,
-        0,
+        appWidgetId,
         intent,
         flags
     )

@@ -2,7 +2,6 @@ package com.github.notizklotz.swisswowbagger.app
 
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.idling.CountingIdlingResource
@@ -50,7 +49,7 @@ object InsultSpeechPlayer {
             mediaPlayer?.release()
             mediaPlayer = null
         } catch (e: Exception) {
-            Log.d("wowbagger", "releaseMediaPlayer: could not stop or release", e)
+            logError { "releaseMediaPlayer: could not stop or release" to e }
         }
     }
 

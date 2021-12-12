@@ -1,6 +1,5 @@
 package com.github.notizklotz.swisswowbagger.app
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +27,7 @@ class MainViewModel : ViewModel() {
                 _insult.value = randomInsult.text
                 _insultAudioUrl.value = randomInsult.getAudioUrl(names)
             } catch (error: Exception) {
-                Log.e("Wowbagger", "Could not fetch insult", error)
+                logError { "Could not fetch insult" to error }
             }
         }
     }
