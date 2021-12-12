@@ -3,7 +3,6 @@ package com.github.notizklotz.swisswowbagger.app.widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -11,14 +10,17 @@ import android.widget.RemoteViews
 import com.github.notizklotz.swisswowbagger.app.InsultSpeechPlayer
 import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.data.InsultRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * Widget for instantly insulting a preconfigured target name.
  * App Widget Configuration implemented in [InsultWidgetConfigureActivity].
  */
-@DelicateCoroutinesApi
 class InsultWidget : AppWidgetProvider() {
+
+    private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     override fun onUpdate(
         context: Context,
@@ -50,7 +52,7 @@ class InsultWidget : AppWidgetProvider() {
     }
 
     private fun playInsult(context: Context, appWidgetId: Int) {
-        execAsync(GlobalScope, Dispatchers.IO) {
+        coroutineScope.launch {
             val insultTargetName = loadInsultTargetName(context, appWidgetId)
 
             val insult = InsultRepository.getInsult(listOf(insultTargetName))
@@ -60,25 +62,9 @@ class InsultWidget : AppWidgetProvider() {
     }
 }
 
-/**
- * Run work asynchronously from a [BroadcastReceiver].
- */
-private fun BroadcastReceiver.execAsync(
-    coroutineScope: CoroutineScope,
-    dispatcher: CoroutineDispatcher,
-    block: suspend () -> Unit
-) {
-    val pendingResult = goAsync()
-    coroutineScope.launch(dispatcher) {
-        block()
-        pendingResult.finish()
-    }
-}
-
 private const val INTENT_ACTION_INSTANT_INSULT_PLAY = "INSTANT_INSULT_PLAY"
 private const val INTENT_EXTRA_APP_WIDGET_ID = "appWidgetId"
 
-@DelicateCoroutinesApi
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,

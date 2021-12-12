@@ -14,12 +14,13 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.components.InsultTargetNameSelector
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
-import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.launch
 
 /**
  * Widget configuration screen for [InsultWidget].
@@ -48,16 +49,21 @@ class InsultWidgetConfigureActivity : ComponentActivity() {
         viewModel.insultTargetName.value =  loadInsultTargetName(this, appWidgetId)
 
         setContent {
+            val coroutineScope = rememberCoroutineScope()
+
             WidgetConfigureForm(
                 name = viewModel.insultTargetName.value,
                 appWidgetId = appWidgetId,
                 onNameChange = { viewModel.insultTargetName.value = it },
-                onNameConfirm = { saveTargetNameAndFinishActivity(it) }
+                onNameConfirm = {
+                    coroutineScope.launch {
+                        saveTargetNameAndFinishActivity(it)
+                    }
+                }
             )
         }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun saveTargetNameAndFinishActivity(appWidgetId: Int) {
         saveInsultTargetName(
             this,

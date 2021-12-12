@@ -13,6 +13,7 @@ object InsultSpeechPlayer {
 
     private var idlingResource: CountingIdlingResource? = null
 
+    @Suppress("ObjectPropertyName")
     private var _playCount = 0
     var playCount: Int
         get() = _playCount
