@@ -48,14 +48,14 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         benchmark {
             // duplicate any release build type settings for measurement accuracy,
             // such as "minifyEnabled" and "proguardFiles" in this block
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             debuggable false
@@ -102,7 +102,6 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.4.0'
     implementation 'androidx.startup:startup-runtime:1.1.0'
     implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
-    implementation "io.ktor:ktor-client-android:$ktor_version"
     implementation "io.ktor:ktor-client-cio:$ktor_version"
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
     testImplementation 'junit:junit:4.13.2'

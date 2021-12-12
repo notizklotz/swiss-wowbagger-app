@@ -93,4 +93,4 @@ jobs:
           releaseFiles: app/build/outputs/bundle/release/*.aab
           track: internal
           status: completed
-#          mappingFile: app/build/outputs/mapping/release/mapping.txt
+          mappingFile: app/build/outputs/mapping/release/mapping.txt
