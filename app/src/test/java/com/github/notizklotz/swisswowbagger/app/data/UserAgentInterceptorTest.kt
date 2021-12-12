@@ -14,9 +14,7 @@ class UserAgentInterceptorTest {
 
     @Test
     fun testUserAgentString() {
-        val userAgentInterceptor = UserAgentInterceptor(context)
-
-        assertThat(userAgentInterceptor.userAgent)
+        assertThat(createUserAgentString(context))
             .matches("wowbagger-android/\\d.\\d.\\d \\(robolectric; robolectric; SDK 31; Android 12\\)")
     }
 }

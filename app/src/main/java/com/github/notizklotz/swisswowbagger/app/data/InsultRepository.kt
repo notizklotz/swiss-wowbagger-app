@@ -5,7 +5,7 @@ import kotlinx.coroutines.withContext
 
 object InsultRepository {
 
-    private val wowbaggerApiClient = WowbaggerApi.retrofitService
+    private val wowbaggerApiClient = wowbaggerApiClientInstance
 
     suspend fun getInsult(names: List<String>): Insult = withContext(Dispatchers.IO) {
         wowbaggerApiClient.getInsult(names)
