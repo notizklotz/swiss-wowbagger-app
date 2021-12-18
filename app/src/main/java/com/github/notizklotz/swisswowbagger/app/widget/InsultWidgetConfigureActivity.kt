@@ -18,7 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.notizklotz.swisswowbagger.app.R
-import com.github.notizklotz.swisswowbagger.app.components.InsultTargetNameSelector
+import com.github.notizklotz.swisswowbagger.app.main.InsultTargetNameSelector
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
 import kotlinx.coroutines.launch
 

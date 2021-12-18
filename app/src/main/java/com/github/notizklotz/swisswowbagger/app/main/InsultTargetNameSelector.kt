@@ -1,4 +1,4 @@
-package com.github.notizklotz.swisswowbagger.app.components
+package com.github.notizklotz.swisswowbagger.app.main
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*

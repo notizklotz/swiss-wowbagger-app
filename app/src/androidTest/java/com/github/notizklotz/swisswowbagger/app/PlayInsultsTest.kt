@@ -6,7 +6,9 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.github.notizklotz.swisswowbagger.app.components.TEST_TAG_INSULT_TARGET_NAME
+import com.github.notizklotz.swisswowbagger.app.main.MainActivity
+import com.github.notizklotz.swisswowbagger.app.main.TEST_TAG_INSULT_TARGET_NAME
+import com.github.notizklotz.swisswowbagger.app.main.TEST_TAG_INSULT_TEXT
 import com.google.common.truth.Truth.assertWithMessage
 import org.junit.After
 import org.junit.Before

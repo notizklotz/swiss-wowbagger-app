@@ -1,10 +1,11 @@
-package com.github.notizklotz.swisswowbagger.app
+package com.github.notizklotz.swisswowbagger.app.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.notizklotz.swisswowbagger.app.data.InsultRepository
+import com.github.notizklotz.swisswowbagger.app.logError
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
