@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -17,7 +19,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ShareCompat
 import com.github.notizklotz.swisswowbagger.app.R
+import com.github.notizklotz.swisswowbagger.app.data.Insult
+import com.github.notizklotz.swisswowbagger.app.data.websiteBaseUrl
 import com.github.notizklotz.swisswowbagger.app.ui.theme.Red
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
 import com.github.notizklotz.swisswowbagger.app.ui.theme.Yellow
@@ -31,11 +36,13 @@ private val fabHeightInSheet = 24.dp
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainScaffold(
-    insultText: String,
+    insult: Insult?,
     name: String,
     onInsultClicked: () -> Unit,
     onNameChange: (String) -> Unit
 ) {
+    val context = LocalContext.current
+
     SwissWowbaggerAppTheme {
         BottomSheetScaffold(
             scaffoldState = rememberBottomSheetScaffoldState(
@@ -48,7 +55,13 @@ fun MainScaffold(
             },
             floatingActionButtonPosition = FabPosition.Center,
             topBar = {
-                MainAppBar()
+                 MainAppBar {
+                     ShareCompat.IntentBuilder(context)
+                         .setType("text/plain")
+                         .setText(insult?.websiteUrl ?: websiteBaseUrl)
+                         .apply { insult?.text?.let { setSubject(it) } }
+                         .startChooser()
+                 }
             },
             sheetContent = {
                 MainUserInput(
@@ -67,7 +80,7 @@ fun MainScaffold(
                     .padding(8.dp)
                     .fillMaxSize()
             ) {
-                InsultText(insultText)
+                InsultText(insult?.text ?: stringResource(id = R.string.insult_initial))
             }
         }
     }
@@ -89,18 +102,21 @@ private fun MainUserInput(
 }
 
 @Composable
-private fun MainAppBar() {
-    val openDialog = remember { mutableStateOf(false) }
+private fun MainAppBar(onShareClick: () -> Unit) {
+    val openInfoDialog = remember { mutableStateOf(false) }
 
     TopAppBar {
         Spacer(Modifier.weight(1f, true))
-        IconButton(onClick = { openDialog.value = true }) {
+        IconButton(onClick = onShareClick) {
+            Icon(Icons.Filled.Share, contentDescription = "Teile")
+        }
+        IconButton(onClick = { openInfoDialog.value = true }) {
             Icon(Icons.Filled.Info, contentDescription = "Info")
         }
     }
 
-    if (openDialog.value) {
-        InfoDialog { openDialog.value = false }
+    if (openInfoDialog.value) {
+        InfoDialog { openInfoDialog.value = false }
     }
 }
 
@@ -140,5 +156,5 @@ const val TEST_TAG_INSULT_BUTTON = "InsultButton"
 @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MainScaffold(insultText = "Nüt", name = "", onInsultClicked = { }, onNameChange = {})
+    MainScaffold(insult = null, name = "", onInsultClicked = { }, onNameChange = {})
 }

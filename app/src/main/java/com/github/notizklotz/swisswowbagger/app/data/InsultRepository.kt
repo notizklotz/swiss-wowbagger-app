@@ -14,5 +14,8 @@ object InsultRepository {
 }
 
 data class Insult(val id: Long, val text: String, val name: String) {
-    val audioUrl = "$wowbaggerBaseUrl/$id?format=wav&v=undefined&names=$name"
+    val audioUrl = "$wowbaggerApiBaseUrl/$id?format=wav&v=undefined&names=$name"
+    val websiteUrl = "$websiteBaseUrl/#$id"
 }
+
+const val websiteBaseUrl = "https://nidi3.github.io/swiss-wowbagger"
