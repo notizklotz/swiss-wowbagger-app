@@ -40,11 +40,26 @@
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.SwissWowbaggerApp.NoActionBar">
+            <tools:validation testUrl="https://nidi3.github.io/swiss-wowbagger/#1639916303722" />
+            <tools:validation testUrl="https://nidi3.github.io/swiss-wowbagger" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="nidi3.github.io"
+                    android:pathPrefix="/swiss-wowbagger" />
+            </intent-filter>
+
             <intent-filter>
                 <!-- Used in macrobenchmark-->
                 <action android:name="com.github.notizklotz.swisswowbagger.app.MAIN_ACTIVITY" />
@@ -57,11 +72,14 @@
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
             tools:node="merge">
-            <meta-data android:name="com.github.notizklotz.swisswowbagger.app.data.WowbaggerApiClientInitializer"
+            <meta-data
+                android:name="com.github.notizklotz.swisswowbagger.app.data.WowbaggerApiClientInitializer"
                 android:value="androidx.startup" />
         </provider>
 
-        <profileable android:shell="true" tools:targetApi="q" />
+        <profileable
+            android:shell="true"
+            tools:targetApi="q" />
     </application>
 
 </manifest>

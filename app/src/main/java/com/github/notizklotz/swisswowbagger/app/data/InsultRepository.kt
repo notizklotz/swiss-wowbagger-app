@@ -7,8 +7,12 @@ object InsultRepository {
 
     private val wowbaggerApiClient = wowbaggerApiClientInstance
 
-    suspend fun getInsult(name: String): Insult = withContext(Dispatchers.IO) {
-        wowbaggerApiClient.getInsult(name).let { Insult(it.id, it.text, name) }
+    suspend fun getRandomInsult(name: String): Insult = withContext(Dispatchers.IO) {
+        wowbaggerApiClient.getRandomInsult(name).let { Insult(it.id, it.text, name) }
+    }
+
+    suspend fun getInsult(id: String): Insult = withContext(Dispatchers.IO) {
+        wowbaggerApiClient.getInsult(id).let { Insult(it.id, it.text, "") }
     }
 
 }

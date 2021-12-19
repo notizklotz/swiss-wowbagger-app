@@ -22,12 +22,16 @@ class MainViewModel : ViewModel() {
 
     private var fetchInsultIdlingResource: CountingIdlingResource? = null
 
-    fun fetchInsult() {
+    fun fetchInsult(insultId: String? = null) {
         fetchInsultIdlingResource?.increment()
 
         viewModelScope.launch {
             try {
-                val fetchedInsult = InsultRepository.getInsult(name.value ?: "")
+                val fetchedInsult = if (insultId == null) {
+                    InsultRepository.getRandomInsult(name.value ?: "")
+                } else {
+                    InsultRepository.getInsult(insultId)
+                }
                 _insult.value = fetchedInsult
                 InsultSpeechPlayer.play(fetchedInsult.audioUrl)
                 fetchInsultIdlingResource?.decrement()

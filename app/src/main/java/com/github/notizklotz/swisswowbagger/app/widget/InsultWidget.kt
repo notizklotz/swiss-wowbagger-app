@@ -56,7 +56,7 @@ class InsultWidget : AppWidgetProvider() {
         coroutineScope.launch {
             val insultTargetName = loadInsultTargetName(context, appWidgetId)
 
-            val insult = InsultRepository.getInsult(insultTargetName)
+            val insult = InsultRepository.getRandomInsult(insultTargetName)
 
             InsultSpeechPlayer.play(insult.audioUrl)
         }

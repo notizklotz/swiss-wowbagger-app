@@ -16,7 +16,9 @@ const val wowbaggerApiBaseUrl = "https://swiss-wowbagger-ultgi7by3q-oa.a.run.app
 
 interface WowbaggerApiClient {
 
-    suspend fun getInsult(name: String): InsultResponse
+    suspend fun getRandomInsult(name: String): InsultResponse
+
+    suspend fun getInsult(id: String): InsultResponse
 
 }
 
@@ -35,10 +37,17 @@ class KtorWowbaggerApiClient(private val userAgentString: String): WowbaggerApiC
         }
     }
 
-    override suspend fun getInsult(name: String): InsultResponse {
+    override suspend fun getRandomInsult(name: String): InsultResponse {
         return client.get(wowbaggerApiBaseUrl) {
             parameter("format", "json")
             parameter("names", name)
+        }
+    }
+
+    override suspend fun getInsult(id: String): InsultResponse {
+        return client.get("$wowbaggerApiBaseUrl/$id") {
+            parameter("format", "json")
+            parameter("names", "")
         }
     }
 }
