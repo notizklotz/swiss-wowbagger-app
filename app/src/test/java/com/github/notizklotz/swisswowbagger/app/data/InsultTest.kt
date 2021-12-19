@@ -7,26 +7,26 @@ class InsultTest {
 
     @Test
     fun `getAudioUrl - no names`() {
-        val insult = Insult(1234, "Huere siech")
+        val insult = Insult(1234, "Huere siech", "")
 
-        assertThat(insult.getAudioUrl(emptyList()))
+        assertThat(insult.audioUrl)
             .isEqualTo("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=")
     }
 
     @Test
     fun `getAudioUrl - one name`() {
-        val insult = Insult(1234, "Huere siech")
+        val insult = Insult(1234, "Huere siech", "myname")
 
-        assertThat(insult.getAudioUrl(listOf("myname")))
+        assertThat(insult.audioUrl)
             .isEqualTo("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=myname")
     }
 
 
     @Test
     fun `getAudioUrl - multiple names`() {
-        val insult = Insult(1234, "Huere siech")
+        val insult = Insult(1234, "Huere siech", "myname othername")
 
-        assertThat(insult.getAudioUrl(listOf("myname", "othername")))
+        assertThat(insult.audioUrl)
             .isEqualTo("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=myname othername")
     }
 }

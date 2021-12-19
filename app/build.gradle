@@ -25,10 +25,13 @@ println 'Keystore filepath: ' + keystoreProperties['storeFile']
 android {
     signingConfigs {
         release {
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-            keyPassword keystoreProperties['keyPassword']
-            keyAlias keystoreProperties['keyAlias']
+            def storeFilename = keystoreProperties['storeFile']
+            if (storeFilename != null) {
+                storeFile file(storeFilename)
+                storePassword keystoreProperties['storePassword']
+                keyPassword keystoreProperties['keyPassword']
+                keyAlias keystoreProperties['keyAlias']
+            }
         }
     }
     compileSdk 31

@@ -31,7 +31,7 @@ private val fabHeightInSheet = 24.dp
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainScaffold(
-    insult: String,
+    insultText: String,
     name: String,
     onInsultClicked: () -> Unit,
     onNameChange: (String) -> Unit
@@ -67,7 +67,7 @@ fun MainScaffold(
                     .padding(8.dp)
                     .fillMaxSize()
             ) {
-                InsultText(insult)
+                InsultText(insultText)
             }
         }
     }
@@ -110,6 +110,7 @@ private fun InsultFloatingActionButton(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
         onClick = { onClick() },
         text = { Text(stringResource(R.string.insult_button_text)) },
+        modifier = Modifier.testTag(TEST_TAG_INSULT_BUTTON),
         icon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_bubble_24),
@@ -133,10 +134,11 @@ private fun InsultText(text: String, modifier: Modifier = Modifier) {
 }
 
 const val TEST_TAG_INSULT_TEXT = "InsultText"
+const val TEST_TAG_INSULT_BUTTON = "InsultButton"
 
 @Preview(name = "Light Theme", showBackground = true)
 @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MainScaffold(insult = "Nüt", name = "", onInsultClicked = { }, onNameChange = {})
+    MainScaffold(insultText = "Nüt", name = "", onInsultClicked = { }, onNameChange = {})
 }

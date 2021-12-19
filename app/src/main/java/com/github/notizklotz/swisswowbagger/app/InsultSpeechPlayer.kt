@@ -43,7 +43,7 @@ object InsultSpeechPlayer {
         }
     }
 
-    fun releaseMediaPlayer() {
+    private fun releaseMediaPlayer() {
         try {
             if (mediaPlayer?.isPlaying == true) { mediaPlayer?.stop() }
             mediaPlayer?.release()

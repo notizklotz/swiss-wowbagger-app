@@ -12,19 +12,16 @@ import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import kotlinx.serialization.Serializable
 
-private const val wowbaggerBaseUrl = "https://swiss-wowbagger-ultgi7by3q-oa.a.run.app"
+const val wowbaggerBaseUrl = "https://swiss-wowbagger-ultgi7by3q-oa.a.run.app"
 
 interface WowbaggerApiClient {
 
-    suspend fun getInsult(names: List<String>): Insult
+    suspend fun getInsult(name: String): InsultResponse
 
 }
 
 @Serializable
-data class Insult(val id: Long, val text: String) {
-    fun getAudioUrl(names: List<String>) =
-        "$wowbaggerBaseUrl/$id?format=wav&v=undefined&names=${names.joinToString(" ")}"
-}
+data class InsultResponse(val id: Long, val text: String)
 
 class KtorWowbaggerApiClient(private val userAgentString: String): WowbaggerApiClient {
 
@@ -38,10 +35,10 @@ class KtorWowbaggerApiClient(private val userAgentString: String): WowbaggerApiC
         }
     }
 
-    override suspend fun getInsult(names: List<String>): Insult {
+    override suspend fun getInsult(name: String): InsultResponse {
         return client.get(wowbaggerBaseUrl) {
             parameter("format", "json")
-            parameter("names", names.joinToString(" "))
+            parameter("names", name)
         }
     }
 }

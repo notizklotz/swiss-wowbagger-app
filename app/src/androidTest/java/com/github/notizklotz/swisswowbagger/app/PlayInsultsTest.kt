@@ -7,6 +7,7 @@ import androidx.test.espresso.IdlingResource
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.github.notizklotz.swisswowbagger.app.main.MainActivity
+import com.github.notizklotz.swisswowbagger.app.main.TEST_TAG_INSULT_BUTTON
 import com.github.notizklotz.swisswowbagger.app.main.TEST_TAG_INSULT_TARGET_NAME
 import com.github.notizklotz.swisswowbagger.app.main.TEST_TAG_INSULT_TEXT
 import com.google.common.truth.Truth.assertWithMessage
@@ -28,39 +29,47 @@ class PlayInsultsTest {
 
     @Test
     fun insultWithNoNameSelected() {
+        val playCountBefore = InsultSpeechPlayer.playCount
+
         // Precondition
         composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TEXT).assertTextEquals("Ganz brav")
 
         // Execute
-        composeTestRule.onNodeWithText("Beleidige!").performClick()
+        composeTestRule.onNodeWithTag(TEST_TAG_INSULT_BUTTON).performClick()
+
+        composeTestRule.waitForIdle()
 
         // Verify
-        composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TEXT).assert(hasTextExactly("Ganz brav").not())
+        composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TEXT).assert(hasTextExactly("Ganz brav").not()).printToString()
 
         assertWithMessage("Media player did not play")
-            .that(InsultSpeechPlayer.playCount).isEqualTo(1)
+            .that(InsultSpeechPlayer.playCount).isEqualTo(playCountBefore + 1)
     }
 
     @Test
     fun insultWithSelectedName() {
+        val playCountBefore = InsultSpeechPlayer.playCount
+
         // Precondition
         composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TEXT).assertTextEquals("Ganz brav")
 
         composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TARGET_NAME).performClick().performTextInput("Ädu")
 
         // Execute
-        composeTestRule.onNodeWithText("Beleidige!").performClick()
+        composeTestRule.onNodeWithTag(TEST_TAG_INSULT_BUTTON).performClick()
+
+        composeTestRule.waitForIdle()
 
         // Verify
         composeTestRule.onNodeWithTag(TEST_TAG_INSULT_TEXT).assertTextContains("Ädu", substring = true)
 
         assertWithMessage("Media player did not play")
-            .that(InsultSpeechPlayer.playCount).isEqualTo(1)
+            .that(InsultSpeechPlayer.playCount).isEqualTo(playCountBefore + 1)
     }
 
     @Before
     fun registerIdlingResource() {
-        fetchInsultIdlingResource = composeTestRule.activity.getIdlingResource()
+        fetchInsultIdlingResource = composeTestRule.activity.viewModel.getIdlingResource()
         playInsultIdlingResource = InsultSpeechPlayer.getIdlingResource()
         IdlingRegistry.getInstance().register(fetchInsultIdlingResource, playInsultIdlingResource)
     }
