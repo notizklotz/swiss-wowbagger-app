@@ -49,8 +49,9 @@ fun InfoDialog(onDismissRequest: () -> Unit) {
 private fun InfoDialogContent() {
 
     LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+
         item {
-            Text(text = "Beteiligti Söiniggle:", style = MaterialTheme.typography.subtitle1)
+            Text(text = "Beteiligti Söiniggle:", style = MaterialTheme.typography.h6)
         }
 
         item {
@@ -76,7 +77,7 @@ private fun InfoDialogContent() {
 
         item { Spacer(modifier = Modifier.height(6.dp))}
         item {
-            Text(text = "Üs chame miete bir:", style = MaterialTheme.typography.subtitle1)
+            Text(text = "Üs chame miete bir:", style = MaterialTheme.typography.h6)
         }
 
         item {
@@ -97,10 +98,11 @@ private fun InfoDialogContent() {
 
         item { Spacer(modifier = Modifier.height(6.dp))}
         item {
-            Text(text = "Sourcecode:", style = MaterialTheme.typography.subtitle1)
+            Text(text = "Links:", style = MaterialTheme.typography.h6)
         }
 
         item {
+            GithubLinkButton("Nidi's Original im Web", Uri.parse("https://nidi3.github.io/swiss-wowbagger"))
             GithubLinkButton("App Sourcecode", Uri.parse("https://github.com/notizklotz/swiss-wowbagger-app"))
             GithubLinkButton("Wowbagger Sourcecode", Uri.parse("https://github.com/nidi3/swiss-wowbagger"))
         }
