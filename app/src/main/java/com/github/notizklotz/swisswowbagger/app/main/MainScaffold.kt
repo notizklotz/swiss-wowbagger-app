@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.ShareCompat
 import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.data.Insult
+import com.github.notizklotz.swisswowbagger.app.data.Voice
 import com.github.notizklotz.swisswowbagger.app.data.websiteBaseUrl
 import com.github.notizklotz.swisswowbagger.app.ui.theme.Red
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
@@ -33,54 +34,54 @@ import com.github.notizklotz.swisswowbagger.app.ui.theme.Yellow
  */
 private val fabHeightInSheet = 24.dp
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainScaffold(
     insult: Insult?,
     name: String,
+    voice: Voice,
     onInsultClicked: () -> Unit,
-    onNameChange: (String) -> Unit
+    onNameChange: (String) -> Unit,
+    onVoiceChange: (Voice) -> Unit
 ) {
     val context = LocalContext.current
 
     SwissWowbaggerAppTheme {
-        BottomSheetScaffold(
-            scaffoldState = rememberBottomSheetScaffoldState(
-                bottomSheetState = rememberBottomSheetState(
-                    BottomSheetValue.Expanded
-                )
-            ),
+        Scaffold(
             floatingActionButton = {
                 InsultFloatingActionButton(onInsultClicked)
             },
             floatingActionButtonPosition = FabPosition.Center,
-            topBar = {
-                 MainAppBar {
-                     ShareCompat.IntentBuilder(context)
-                         .setType("text/plain")
-                         .setText(insult?.websiteUrl ?: websiteBaseUrl)
-                         .apply { insult?.text?.let { setSubject(it) } }
-                         .startChooser()
-                 }
-            },
-            sheetContent = {
-                MainUserInput(
-                    name,
-                    Modifier
-                        .padding(top = fabHeightInSheet)
-                        .padding(8.dp),
-                    onNameChange
-                )
+            isFloatingActionButtonDocked = true,
+            bottomBar = {
+                MainAppBar {
+                    ShareCompat.IntentBuilder(context)
+                        .setType("text/plain")
+                        .setText(insult?.websiteUrl ?: websiteBaseUrl)
+                        .apply { insult?.text?.let { setSubject(it) } }
+                        .startChooser()
+                }
             }
         ) { padding ->
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .padding(padding)
-                    .padding(8.dp)
-                    .fillMaxSize()
-            ) {
-                InsultText(insult?.text ?: stringResource(id = R.string.insult_initial))
+            Column(modifier = Modifier.padding(padding)) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .weight(weight = 1f, fill = true)
+                ) {
+                    InsultText(insult?.text ?: stringResource(id = R.string.insult_initial))
+                }
+                Surface(elevation = 2.dp) {
+                    MainUserInput(
+                        name,
+                        voice,
+                        Modifier
+                            .padding(bottom = fabHeightInSheet)
+                            .padding(8.dp),
+                        onNameChange,
+                        onVoiceChange
+                    )
+                }
             }
         }
     }
@@ -89,15 +90,19 @@ fun MainScaffold(
 @Composable
 private fun MainUserInput(
     name: String,
+    voice: Voice,
     modifier: Modifier = Modifier,
-    onNameChange: (String) -> Unit
+    onNameChange: (String) -> Unit,
+    onVoiceChange: (Voice) -> Unit
 ) {
-    Box(
+    Column(
         modifier = modifier
     ) {
         InsultTargetNameSelector(name) {
             onNameChange(it)
         }
+        Spacer(modifier = Modifier.height(4.dp))
+        VoiceSelector(voice, onVoiceChange)
     }
 }
 
@@ -156,5 +161,11 @@ const val TEST_TAG_INSULT_BUTTON = "InsultButton"
 @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MainScaffold(insult = null, name = "", onInsultClicked = { }, onNameChange = {})
+    MainScaffold(
+        insult = null,
+        name = "",
+        voice = Voice.exilzuerchere,
+        onInsultClicked = { },
+        onNameChange = {},
+        onVoiceChange = {})
 }

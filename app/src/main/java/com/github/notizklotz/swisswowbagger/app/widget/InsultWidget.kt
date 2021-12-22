@@ -10,6 +10,7 @@ import android.widget.RemoteViews
 import com.github.notizklotz.swisswowbagger.app.InsultSpeechPlayer
 import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.data.InsultRepository
+import com.github.notizklotz.swisswowbagger.app.data.Voice
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -58,7 +59,7 @@ class InsultWidget : AppWidgetProvider() {
 
             val insult = InsultRepository.getRandomInsult(insultTargetName)
 
-            InsultSpeechPlayer.play(insult.audioUrl)
+            InsultSpeechPlayer.play(insult.getAudioUrl(Voice.exilzuerchere))
         }
     }
 }

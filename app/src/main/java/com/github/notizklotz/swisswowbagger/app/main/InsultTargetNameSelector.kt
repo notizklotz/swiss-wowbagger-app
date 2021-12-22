@@ -37,11 +37,6 @@ fun InsultTargetNameSelector(name: String, onNameChange: (String) -> Unit) {
                 onNameChange(selectedOptionText)
             },
             label = { Text(stringResource(R.string.name_label)) },
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
-                )
-            },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
             modifier = Modifier.testTag(TEST_TAG_INSULT_TARGET_NAME).fillMaxWidth(),
             singleLine = true,
@@ -62,7 +57,7 @@ fun InsultTargetNameSelector(name: String, onNameChange: (String) -> Unit) {
                 },
             ) {
                 LazyColumn(modifier = Modifier.height(300.dp).width(200.dp)) {
-                    items(items = filteringOptions, key = { it }) { it: String ->
+                    items(items = filteringOptions, key = { it }) {
                         DropdownMenuItem(
                             onClick = {
                                 selectedOptionText = it

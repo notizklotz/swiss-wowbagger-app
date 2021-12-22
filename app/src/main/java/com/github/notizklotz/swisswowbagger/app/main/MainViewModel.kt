@@ -10,6 +10,7 @@ import androidx.test.espresso.idling.CountingIdlingResource
 import com.github.notizklotz.swisswowbagger.app.InsultSpeechPlayer
 import com.github.notizklotz.swisswowbagger.app.data.Insult
 import com.github.notizklotz.swisswowbagger.app.data.InsultRepository
+import com.github.notizklotz.swisswowbagger.app.data.Voice
 import com.github.notizklotz.swisswowbagger.app.logError
 import kotlinx.coroutines.launch
 
@@ -19,6 +20,10 @@ class MainViewModel : ViewModel() {
     val insult: LiveData<Insult> = _insult
 
     val name = MutableLiveData("")
+
+    private val _voice = MutableLiveData(Voice.exilzuerchere)
+    val voice: LiveData<Voice>
+        get() = _voice
 
     private var fetchInsultIdlingResource: CountingIdlingResource? = null
 
@@ -33,12 +38,18 @@ class MainViewModel : ViewModel() {
                     InsultRepository.getInsult(insultId)
                 }
                 _insult.value = fetchedInsult
-                InsultSpeechPlayer.play(fetchedInsult.audioUrl)
+                InsultSpeechPlayer.play(fetchedInsult.getAudioUrl(voice.value ?: Voice.exilzuerchere))
                 fetchInsultIdlingResource?.decrement()
             } catch (error: Exception) {
                 logError { "Could not fetch insult" to error }
             }
         }
+    }
+
+    fun setVoice(voice: Voice) {
+        _voice.value = voice
+
+        insult.value?.let { InsultSpeechPlayer.play(it.getAudioUrl(voice)) }
     }
 
     @VisibleForTesting

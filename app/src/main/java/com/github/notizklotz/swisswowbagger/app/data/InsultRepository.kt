@@ -18,8 +18,15 @@ object InsultRepository {
 }
 
 data class Insult(val id: Long, val text: String, val name: String) {
-    val audioUrl = "$wowbaggerApiBaseUrl/$id?format=wav&v=undefined&names=$name"
     val websiteUrl = "$websiteBaseUrl/#$id"
+
+    fun getAudioUrl(voice: Voice) =
+        "$wowbaggerApiBaseUrl/$id?format=wav&v=undefined&names=$name&voice=$voice"
+}
+
+@Suppress("EnumEntryName")
+enum class Voice(val label: String) {
+    roboter("Bärner Roboter"), exilzuerchere("Zürchere im Exil"), welschi("Ä Wäutschi"), tessiner("Ä Tessiner")
 }
 
 const val websiteBaseUrl = "https://nidi3.github.io/swiss-wowbagger"

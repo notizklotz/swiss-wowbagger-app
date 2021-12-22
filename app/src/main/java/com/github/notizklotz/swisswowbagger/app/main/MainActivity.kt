@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import com.github.notizklotz.swisswowbagger.app.data.Insult
+import com.github.notizklotz.swisswowbagger.app.data.Voice
 
 class MainActivity : ComponentActivity() {
 
@@ -24,15 +25,20 @@ class MainActivity : ComponentActivity() {
         setContent {
             val insult: Insult? by viewModel.insult.observeAsState()
             val name: String by viewModel.name.observeAsState("")
+            val voice: Voice by viewModel.voice.observeAsState(Voice.exilzuerchere)
 
             MainScaffold(
                 insult = insult,
                 name = name,
+                voice = voice,
                 onInsultClicked = {
                     viewModel.fetchInsult()
                 },
                 onNameChange = {
                     viewModel.name.value = it
+                },
+                onVoiceChange = {
+                    viewModel.setVoice(it)
                 }
             )
         }
