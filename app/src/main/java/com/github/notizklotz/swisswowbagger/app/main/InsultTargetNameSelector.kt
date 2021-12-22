@@ -1,12 +1,17 @@
 package com.github.notizklotz.swisswowbagger.app.main
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.github.notizklotz.swisswowbagger.app.R
 
 /**
@@ -40,11 +45,6 @@ fun InsultTargetNameSelector(name: String, onNameChange: (String) -> Unit) {
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
             modifier = Modifier.testTag(TEST_TAG_INSULT_TARGET_NAME).fillMaxWidth(),
             singleLine = true,
-//            keyboardActions = KeyboardActions(
-//                onDone = {
-//                    focusManager.clearFocus()
-//                }
-//            )
         )
 
         val filteringOptions =
@@ -61,16 +61,18 @@ fun InsultTargetNameSelector(name: String, onNameChange: (String) -> Unit) {
                     expanded = false
                 },
             ) {
-                filteringOptions.forEach { selectionOption ->
-                    DropdownMenuItem(
-                        onClick = {
-                            selectedOptionText = selectionOption
-                            expanded = false
-                            focusManager.clearFocus()
-                            onNameChange(selectionOption)
+                LazyColumn(modifier = Modifier.height(300.dp).width(200.dp)) {
+                    items(items = filteringOptions, key = { it }) { it: String ->
+                        DropdownMenuItem(
+                            onClick = {
+                                selectedOptionText = it
+                                expanded = false
+                                focusManager.clearFocus()
+                                onNameChange(it)
+                            }
+                        ) {
+                            Text(text = it)
                         }
-                    ) {
-                        Text(text = selectionOption)
                     }
                 }
             }
