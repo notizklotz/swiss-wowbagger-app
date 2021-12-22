@@ -32,13 +32,13 @@ class MainActivity : ComponentActivity() {
                 name = name,
                 voice = voice,
                 onInsultClicked = {
-                    viewModel.fetchInsult()
+                    viewModel.fetchInsultAndPlay()
                 },
                 onNameChange = {
                     viewModel.name.value = it
                 },
                 onVoiceChange = {
-                    viewModel.setVoice(it)
+                    viewModel.setVoiceAndPlay(it)
                 }
             )
         }
@@ -51,10 +51,13 @@ class MainActivity : ComponentActivity() {
 
     private fun handleIntent(intent: Intent) {
         val appLinkAction = intent.action
-        val appLinkData: Uri? = intent.data
+        val wowbaggerUri: Uri? = intent.data
         if (Intent.ACTION_VIEW == appLinkAction) {
-            appLinkData?.fragment?.also { fragment ->
-                viewModel.fetchInsult(fragment.removePrefix("#"))
+            if (wowbaggerUri != null) {
+                val insultId = wowbaggerUri.fragment
+                val name = wowbaggerUri.getQueryParameter("names")
+                val voice = wowbaggerUri.getQueryParameter("voice")?.let { Voice.valueOf(it) }
+                viewModel.setValuesAndPlay(insultId, name, voice)
             }
         }
     }

@@ -15,6 +15,8 @@ fun VoiceSelector(voice: Voice, onVoiceChange: (Voice) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf(voice) }
 
+    selectedOption = voice
+
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {

@@ -1,6 +1,7 @@
 package com.github.notizklotz.swisswowbagger.app.data
 
 import com.google.common.truth.Truth.assertThat
+import io.ktor.http.*
 import org.junit.Test
 
 class InsultTest {
@@ -10,7 +11,7 @@ class InsultTest {
         val insult = Insult(1234, "Huere siech", "")
 
         assertThat(insult.getAudioUrl(Voice.exilzuerchere))
-            .isEqualTo("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=&voice=exilzuerchere")
+            .isEqualTo(Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=&voice=exilzuerchere"))
     }
 
     @Test
@@ -18,15 +19,14 @@ class InsultTest {
         val insult = Insult(1234, "Huere siech", "myname")
 
         assertThat(insult.getAudioUrl(Voice.exilzuerchere))
-            .isEqualTo("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=myname&voice=exilzuerchere")
+            .isEqualTo(Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=myname&voice=exilzuerchere"))
     }
-
 
     @Test
     fun `getAudioUrl - multiple names`() {
         val insult = Insult(1234, "Huere siech", "myname othername")
 
         assertThat(insult.getAudioUrl(Voice.exilzuerchere))
-            .isEqualTo("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=myname othername&voice=exilzuerchere")
+            .isEqualTo(Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=myname+othername&voice=exilzuerchere"))
     }
 }

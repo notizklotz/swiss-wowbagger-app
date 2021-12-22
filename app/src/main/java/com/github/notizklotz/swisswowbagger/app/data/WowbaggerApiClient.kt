@@ -10,15 +10,16 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
+import io.ktor.http.*
 import kotlinx.serialization.Serializable
 
-const val wowbaggerApiBaseUrl = "https://swiss-wowbagger-ultgi7by3q-oa.a.run.app"
+val wowbaggerApiBaseUrl = Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app")
 
 interface WowbaggerApiClient {
 
     suspend fun getRandomInsult(name: String): InsultResponse
 
-    suspend fun getInsult(id: String): InsultResponse
+    suspend fun getInsult(name: String, id: String): InsultResponse
 
 }
 
@@ -44,11 +45,8 @@ class KtorWowbaggerApiClient(private val userAgentString: String): WowbaggerApiC
         }
     }
 
-    override suspend fun getInsult(id: String): InsultResponse {
-        return client.get("$wowbaggerApiBaseUrl/$id") {
-            parameter("format", "json")
-            parameter("names", "")
-        }
+    override suspend fun getInsult(name: String, id: String): InsultResponse {
+        return client.get(Insult.createUrl(id, name))
     }
 }
 

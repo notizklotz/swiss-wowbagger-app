@@ -54,9 +54,13 @@ fun MainScaffold(
             isFloatingActionButtonDocked = true,
             bottomBar = {
                 MainAppBar {
+                    val text: String = insult
+                        ?.let { "${insult.text}\n\n${insult.getWebsiteUrl(voice)}" }
+                        ?: websiteBaseUrl.toString()
+
                     ShareCompat.IntentBuilder(context)
                         .setType("text/plain")
-                        .setText(insult?.websiteUrl ?: websiteBaseUrl)
+                        .setText(text)
                         .apply { insult?.text?.let { setSubject(it) } }
                         .startChooser()
                 }

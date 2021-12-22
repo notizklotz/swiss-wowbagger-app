@@ -27,7 +27,7 @@ class MainViewModel : ViewModel() {
 
     private var fetchInsultIdlingResource: CountingIdlingResource? = null
 
-    fun fetchInsult(insultId: String? = null) {
+    fun fetchInsultAndPlay(insultId: String? = null) {
         fetchInsultIdlingResource?.increment()
 
         viewModelScope.launch {
@@ -35,7 +35,7 @@ class MainViewModel : ViewModel() {
                 val fetchedInsult = if (insultId == null) {
                     InsultRepository.getRandomInsult(name.value ?: "")
                 } else {
-                    InsultRepository.getInsult(insultId)
+                    InsultRepository.getInsult(name.value ?: "", insultId)
                 }
                 _insult.value = fetchedInsult
                 InsultSpeechPlayer.play(fetchedInsult.getAudioUrl(voice.value ?: Voice.exilzuerchere))
@@ -46,10 +46,17 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun setVoice(voice: Voice) {
+    fun setVoiceAndPlay(voice: Voice) {
         _voice.value = voice
 
         insult.value?.let { InsultSpeechPlayer.play(it.getAudioUrl(voice)) }
+    }
+
+    fun setValuesAndPlay(insultId: String?, names: String?, voice: Voice?) {
+        _voice.value = voice ?: Voice.exilzuerchere
+        name.value = names ?: ""
+
+        fetchInsultAndPlay(insultId)
     }
 
     @VisibleForTesting

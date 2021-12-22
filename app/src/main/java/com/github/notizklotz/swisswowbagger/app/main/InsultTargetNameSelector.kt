@@ -22,6 +22,9 @@ import com.github.notizklotz.swisswowbagger.app.R
 fun InsultTargetNameSelector(name: String, onNameChange: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(name) }
+
+    selectedOptionText = name
+
     // We want to react on tap/press on TextField to show menu
     ExposedDropdownMenuBox(
         expanded = expanded,

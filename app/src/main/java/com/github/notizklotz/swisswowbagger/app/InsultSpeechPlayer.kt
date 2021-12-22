@@ -5,6 +5,7 @@ import android.media.MediaPlayer
 import androidx.annotation.VisibleForTesting
 import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.idling.CountingIdlingResource
+import io.ktor.http.*
 
 object InsultSpeechPlayer {
 
@@ -20,7 +21,7 @@ object InsultSpeechPlayer {
             _playCount = value
         }
 
-    fun play(url: String) {
+    fun play(url: Url) {
         idlingResource?.increment()
         playCount++
 
@@ -33,7 +34,7 @@ object InsultSpeechPlayer {
                     .setUsage(AudioAttributes.USAGE_MEDIA)
                     .build()
             )
-            setDataSource(url)
+            setDataSource(url.toString())
             prepareAsync()
             setOnPreparedListener { start() }
             setOnCompletionListener {
