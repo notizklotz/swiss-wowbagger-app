@@ -5,16 +5,14 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.annotation.VisibleForTesting
 import androidx.startup.Initializer
+import com.github.notizklotz.swisswowbagger.app.getApiBaseUrl
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
-import io.ktor.http.*
 import kotlinx.serialization.Serializable
 import java.util.concurrent.TimeUnit
-
-val wowbaggerApiBaseUrl = Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app")
 
 interface WowbaggerApiClient {
 
@@ -42,7 +40,7 @@ class KtorWowbaggerApiClient(private val userAgentString: String): WowbaggerApiC
     }
 
     override suspend fun getRandomInsult(name: String): InsultResponse {
-        return client.get(wowbaggerApiBaseUrl) {
+        return client.get(getApiBaseUrl()) {
             parameter("format", "json")
             parameter("names", name)
         }

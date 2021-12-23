@@ -13,9 +13,13 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import com.github.notizklotz.swisswowbagger.app.CONFIG_KEY_WOWBAGGER_API_URL
+import com.github.notizklotz.swisswowbagger.app.CONFIG_KEY_WOWBAGGER_WEBSITE_URL
 import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.data.Insult
 import com.github.notizklotz.swisswowbagger.app.data.Voice
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 
 class MainActivity : ComponentActivity() {
 
@@ -24,6 +28,16 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Firebase.remoteConfig.apply {
+            setDefaultsAsync(
+                mapOf(
+                    CONFIG_KEY_WOWBAGGER_API_URL to "https://swiss-wowbagger-ultgi7by3q-oa.a.run.app",
+                    CONFIG_KEY_WOWBAGGER_WEBSITE_URL to "https://nidi3.github.io/swiss-wowbagger"
+                )
+            )
+            fetchAndActivate()
+        }
 
         handleIntent(intent)
 

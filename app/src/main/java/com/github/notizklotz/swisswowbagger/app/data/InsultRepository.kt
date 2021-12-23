@@ -1,5 +1,7 @@
 package com.github.notizklotz.swisswowbagger.app.data
 
+import com.github.notizklotz.swisswowbagger.app.getApiBaseUrl
+import com.github.notizklotz.swisswowbagger.app.getWebsiteBaseUrl
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,14 +26,14 @@ object InsultRepository {
 
 data class Insult(val id: Long, val text: String, val name: String) {
 
-    fun getWebsiteUrl(voice: Voice): Url = URLBuilder(websiteBaseUrl)
+    fun getWebsiteUrl(voice: Voice): Url = URLBuilder(getWebsiteBaseUrl())
         .applyCommon(voice)
         .apply {
             fragment = id.toString()
         }
         .build()
 
-    fun getAudioUrl(voice: Voice): Url = URLBuilder(wowbaggerApiBaseUrl)
+    fun getAudioUrl(voice: Voice): Url = URLBuilder(getApiBaseUrl())
         .applyCommon(voice)
         .apply {
             parameters["format"] = "wav"
@@ -46,7 +48,7 @@ data class Insult(val id: Long, val text: String, val name: String) {
     }
 
     companion object {
-        fun createUrl(id: String, name: String): Url = URLBuilder(wowbaggerApiBaseUrl).apply {
+        fun createUrl(id: String, name: String): Url = URLBuilder(getApiBaseUrl()).apply {
             parameters["v"] = "undefined"
             parameters["names"] = name
             parameters["format"] = "json"
@@ -60,5 +62,3 @@ data class Insult(val id: Long, val text: String, val name: String) {
 enum class Voice(val label: String) {
     roboter("Bärner Roboter"), exilzuerchere("Zürchere im Exil"), welschi("Ä Wäutschi"), tessiner("Ä Tessiner")
 }
-
-val websiteBaseUrl = Url("https://nidi3.github.io/swiss-wowbagger")
