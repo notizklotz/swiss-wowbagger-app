@@ -6,7 +6,8 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -48,64 +49,62 @@ fun InfoDialog(onDismissRequest: () -> Unit) {
 @Composable
 private fun InfoDialogContent() {
 
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
 
-        item {
-            Text(text = "Beteiligti Söiniggle:", style = MaterialTheme.typography.h6)
-        }
+        Text(text = "Beteiligti Söiniggle:", style = MaterialTheme.typography.h6)
 
-        item {
-            InfoDialogCard(
-                drawableId = R.drawable.nidi,
-                contentDescription = "Büud vom Nidi",
-                name = "Nidi",
-                description = "Beleidigungsgenerator und Sprachsynthese (sSchwirige)",
-                link = Uri.parse("http://nidi.guru")
+        InfoDialogCard(
+            drawableId = R.drawable.nidi,
+            contentDescription = "Büud vom Nidi",
+            name = "Nidi",
+            description = "Beleidigungsgenerator und Sprachsynthese (Mbrola)",
+            link = Uri.parse("http://nidi.guru")
+        )
+
+        InfoDialogCard(
+            drawableId = R.drawable.aedu,
+            contentDescription = "Büud vom Ädu",
+            name = "Ädu",
+            description = "App und Sprachsynthese (Azure)",
+            link = Uri.parse("https://github.com/notizklotz")
+        )
+
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(text = "Üs chame miete bir:", style = MaterialTheme.typography.h6)
+
+        val context = LocalContext.current
+        val intent =
+            remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://www.schaltstelle.ch")) }
+
+        Card(onClick = { context.startActivity(intent) }, shape = RectangleShape) {
+            Image(
+                painter = painterResource(id = R.drawable.schaltelle),
+                contentDescription = "Logo vor Firma Schaltstelle",
+                Modifier
+                    .background(Color.White)
+                    .fillMaxWidth(),
             )
         }
 
-        item {
-            InfoDialogCard(
-                drawableId = R.drawable.aedu,
-                contentDescription = "Büud vom Ädu",
-                name = "Ädu",
-                description = "Programmierig vor App (sEifache)",
-                link = Uri.parse("https://github.com/notizklotz")
-            )
-        }
 
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(text = "Links:", style = MaterialTheme.typography.h6)
 
-        item { Spacer(modifier = Modifier.height(6.dp))}
-        item {
-            Text(text = "Üs chame miete bir:", style = MaterialTheme.typography.h6)
-        }
-
-        item {
-            val context = LocalContext.current
-            val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse("https://www.schaltstelle.ch")) }
-
-            Card(onClick = { context.startActivity(intent) }, shape = RectangleShape) {
-                Image(
-                    painter = painterResource(id = R.drawable.schaltelle),
-                    contentDescription = "Logo vor Firma Schaltstelle",
-                    Modifier
-                        .background(Color.White)
-                        .fillMaxWidth(),
-                )
-            }
-        }
-
-
-        item { Spacer(modifier = Modifier.height(6.dp))}
-        item {
-            Text(text = "Links:", style = MaterialTheme.typography.h6)
-        }
-
-        item {
-            GithubLinkButton("Nidi's Original im Web", Uri.parse("https://nidi3.github.io/swiss-wowbagger"))
-            GithubLinkButton("App Sourcecode", Uri.parse("https://github.com/notizklotz/swiss-wowbagger-app"))
-            GithubLinkButton("Wowbagger Sourcecode", Uri.parse("https://github.com/nidi3/swiss-wowbagger"))
-        }
+        GithubLinkButton(
+            "Nidis Original im Web",
+            Uri.parse("https://nidi3.github.io/swiss-wowbagger")
+        )
+        GithubLinkButton(
+            "App Sourcecode",
+            Uri.parse("https://github.com/notizklotz/swiss-wowbagger-app")
+        )
+        GithubLinkButton(
+            "Wowbagger Sourcecode",
+            Uri.parse("https://github.com/nidi3/swiss-wowbagger")
+        )
     }
 }
 
