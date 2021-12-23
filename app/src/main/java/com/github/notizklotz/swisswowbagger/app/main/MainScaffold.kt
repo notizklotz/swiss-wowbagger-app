@@ -23,7 +23,7 @@ import androidx.core.app.ShareCompat
 import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.data.Insult
 import com.github.notizklotz.swisswowbagger.app.data.Voice
-import com.github.notizklotz.swisswowbagger.app.getWebsiteBaseUrl
+import com.github.notizklotz.swisswowbagger.app.data.websiteBaseUrl
 import com.github.notizklotz.swisswowbagger.app.ui.theme.Red
 import com.github.notizklotz.swisswowbagger.app.ui.theme.SwissWowbaggerAppTheme
 import com.github.notizklotz.swisswowbagger.app.ui.theme.Yellow
@@ -59,7 +59,7 @@ fun MainScaffold(
                 MainAppBar {
                     val text: String = insult
                         ?.let { "${insult.text}\n\n${insult.getWebsiteUrl(voice)}" }
-                        ?: getWebsiteBaseUrl()
+                        ?: websiteBaseUrl.toString()
 
                     ShareCompat.IntentBuilder(context)
                         .setType("text/plain")
