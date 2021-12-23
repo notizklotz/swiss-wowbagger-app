@@ -21,7 +21,7 @@ object InsultSpeechPlayer {
             _playCount = value
         }
 
-    fun play(url: Url) {
+    fun play(url: Url, onPrepared: () -> Unit, onError: () -> Unit) {
         idlingResource?.increment()
         playCount++
 
@@ -36,10 +36,19 @@ object InsultSpeechPlayer {
             )
             setDataSource(url.toString())
             prepareAsync()
-            setOnPreparedListener { start() }
+            setOnPreparedListener {
+                start()
+                onPrepared()
+            }
             setOnCompletionListener {
                 releaseMediaPlayer()
                 idlingResource?.decrement()
+            }
+            setOnErrorListener { _, what, extra ->
+                logError { "Could not play media" to InsultPlayException("What: $what, extra: $extra") }
+                onError()
+
+                false
             }
         }
     }
@@ -64,3 +73,5 @@ object InsultSpeechPlayer {
     }
 
 }
+
+class InsultPlayException(message: String) : Exception(message)

@@ -61,14 +61,22 @@ class InsultWidget : AppWidgetProvider() {
 
             try {
                 val insult = InsultRepository.getRandomInsult(insultTargetName)
-                InsultSpeechPlayer.play(insult.getAudioUrl(Voice.exilzuerchere))
+                InsultSpeechPlayer.play(
+                    url = insult.getAudioUrl(Voice.exilzuerchere),
+                    onPrepared = {},
+                    onError = { displayErrorMessage(context) }
+                )
             } catch (e: Exception) {
                 logError { "Could not fetch insult" to e }
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show()
-                }
+                displayErrorMessage(context)
             }
+        }
+    }
+
+    private fun displayErrorMessage(context: Context) {
+        CoroutineScope(Dispatchers.Main).launch {
+            Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show()
         }
     }
 }

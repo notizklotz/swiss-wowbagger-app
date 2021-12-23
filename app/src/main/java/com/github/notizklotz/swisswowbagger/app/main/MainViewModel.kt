@@ -12,6 +12,7 @@ import com.github.notizklotz.swisswowbagger.app.data.Insult
 import com.github.notizklotz.swisswowbagger.app.data.InsultRepository
 import com.github.notizklotz.swisswowbagger.app.data.Voice
 import com.github.notizklotz.swisswowbagger.app.logError
+import io.ktor.http.*
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -47,10 +48,9 @@ class MainViewModel : ViewModel() {
                 } else {
                     InsultRepository.getInsult(name.value ?: "", insultId)
                 }
-                _loading.value = false
                 _insult.value = fetchedInsult
 
-                InsultSpeechPlayer.play(fetchedInsult.getAudioUrl(voice.value ?: Voice.exilzuerchere))
+                playInsult(fetchedInsult.getAudioUrl(voice.value ?: Voice.exilzuerchere))
                 fetchInsultIdlingResource?.decrement()
             } catch (error: Exception) {
                 _loading.value = false
@@ -63,7 +63,11 @@ class MainViewModel : ViewModel() {
     fun setVoiceAndPlay(voice: Voice) {
         _voice.value = voice
 
-        insult.value?.let { InsultSpeechPlayer.play(it.getAudioUrl(voice)) }
+        insult.value?.let {
+            _loading.value = true
+
+            playInsult(it.getAudioUrl(voice))
+        }
     }
 
     fun setValuesAndPlay(insultId: String?, names: String?, voice: Voice?) {
@@ -72,6 +76,14 @@ class MainViewModel : ViewModel() {
 
         fetchInsultAndPlay(insultId)
     }
+
+    private fun playInsult(url: Url) = InsultSpeechPlayer.play(
+        url = url,
+        onPrepared = { _loading.value = false },
+        onError = {
+            _loading.value = false
+            _error.value = true
+        })
 
     @VisibleForTesting
     internal fun getIdlingResource(): IdlingResource {
