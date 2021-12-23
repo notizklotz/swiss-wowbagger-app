@@ -3,6 +3,9 @@ plugins {
     id 'kotlin-android'
     id 'io.github.reactivecircus.app-versioning' version '1.1.0'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.firebase.firebase-perf'
 }
 
 ext {
@@ -57,14 +60,14 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         benchmark {
             // duplicate any release build type settings for measurement accuracy,
             // such as "minifyEnabled" and "proguardFiles" in this block
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             debuggable false
@@ -112,8 +115,11 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.4.0'
     implementation 'androidx.startup:startup-runtime:1.1.0'
     implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
-    implementation "io.ktor:ktor-client-cio:$ktor_version"
+    implementation "io.ktor:ktor-client-okhttp:$ktor_version"
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-perf-ktx'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "androidx.test:core-ktx:1.4.0"
     testImplementation "androidx.test.ext:junit-ktx:$junit_ktx_version"

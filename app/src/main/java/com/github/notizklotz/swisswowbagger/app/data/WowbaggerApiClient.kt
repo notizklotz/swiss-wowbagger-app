@@ -6,12 +6,13 @@ import android.os.Build
 import androidx.annotation.VisibleForTesting
 import androidx.startup.Initializer
 import io.ktor.client.*
-import io.ktor.client.engine.cio.*
+import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.Serializable
+import java.util.concurrent.TimeUnit
 
 val wowbaggerApiBaseUrl = Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app")
 
@@ -28,9 +29,11 @@ data class InsultResponse(val id: Long, val text: String)
 
 class KtorWowbaggerApiClient(private val userAgentString: String): WowbaggerApiClient {
 
-    private val client = HttpClient(CIO) {
+    private val client = HttpClient(OkHttp) {
         engine {
-            requestTimeout = 5_000
+            config {
+                this.connectTimeout(4, TimeUnit.SECONDS)
+            }
         }
         install(JsonFeature)
         install(UserAgent) {

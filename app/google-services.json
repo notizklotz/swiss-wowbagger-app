@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "984445778377",
+    "project_id": "swiss-wowbagger-app",
+    "storage_bucket": "swiss-wowbagger-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984445778377:android:dec9ad8aaed580616c5018",
+        "android_client_info": {
+          "package_name": "com.github.notizklotz.swisswowbagger.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984445778377-7ar1sk0b6udr9mi5t6o1ha1qtrt9mk93.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACf9ivpk0mt9LLZOk8mCoo72CR8OWMGAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984445778377-7ar1sk0b6udr9mi5t6o1ha1qtrt9mk93.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
