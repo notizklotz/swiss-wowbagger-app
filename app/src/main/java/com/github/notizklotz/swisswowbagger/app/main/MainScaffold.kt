@@ -36,9 +36,11 @@ private val fabHeightInSheet = 24.dp
 
 @Composable
 fun MainScaffold(
+    scaffoldState: ScaffoldState,
     insult: Insult?,
     name: String,
     voice: Voice,
+    loading: Boolean,
     onInsultClicked: () -> Unit,
     onNameChange: (String) -> Unit,
     onVoiceChange: (Voice) -> Unit
@@ -47,6 +49,7 @@ fun MainScaffold(
 
     SwissWowbaggerAppTheme {
         Scaffold(
+            scaffoldState = scaffoldState,
             floatingActionButton = {
                 InsultFloatingActionButton(onInsultClicked)
             },
@@ -79,6 +82,7 @@ fun MainScaffold(
                     MainUserInput(
                         name,
                         voice,
+                        loading,
                         Modifier
                             .padding(bottom = fabHeightInSheet)
                             .padding(8.dp),
@@ -88,25 +92,6 @@ fun MainScaffold(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun MainUserInput(
-    name: String,
-    voice: Voice,
-    modifier: Modifier = Modifier,
-    onNameChange: (String) -> Unit,
-    onVoiceChange: (Voice) -> Unit
-) {
-    Column(
-        modifier = modifier
-    ) {
-        InsultTargetNameSelector(name) {
-            onNameChange(it)
-        }
-        Spacer(modifier = Modifier.height(4.dp))
-        VoiceSelector(voice, onVoiceChange)
     }
 }
 
@@ -166,8 +151,10 @@ const val TEST_TAG_INSULT_BUTTON = "InsultButton"
 @Composable
 fun DefaultPreview() {
     MainScaffold(
+        scaffoldState = rememberScaffoldState(),
         insult = null,
         name = "",
+        loading = true,
         voice = Voice.exilzuerchere,
         onInsultClicked = { },
         onNameChange = {},

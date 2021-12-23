@@ -25,22 +25,36 @@ class MainViewModel : ViewModel() {
     val voice: LiveData<Voice>
         get() = _voice
 
+    private val _loading = MutableLiveData(false)
+    val loading: LiveData<Boolean>
+        get() = _loading
+
+    private val _error = MutableLiveData(false)
+    val error: LiveData<Boolean>
+        get() = _error
+
     private var fetchInsultIdlingResource: CountingIdlingResource? = null
 
     fun fetchInsultAndPlay(insultId: String? = null) {
         fetchInsultIdlingResource?.increment()
+        _error.value = false
 
         viewModelScope.launch {
             try {
+                _loading.value = true
                 val fetchedInsult = if (insultId == null) {
                     InsultRepository.getRandomInsult(name.value ?: "")
                 } else {
                     InsultRepository.getInsult(name.value ?: "", insultId)
                 }
+                _loading.value = false
                 _insult.value = fetchedInsult
+
                 InsultSpeechPlayer.play(fetchedInsult.getAudioUrl(voice.value ?: Voice.exilzuerchere))
                 fetchInsultIdlingResource?.decrement()
             } catch (error: Exception) {
+                _loading.value = false
+                _error.value = true
                 logError { "Could not fetch insult" to error }
             }
         }

@@ -7,6 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarResult
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import com.github.notizklotz.swisswowbagger.app.data.Insult
@@ -26,11 +30,35 @@ class MainActivity : ComponentActivity() {
             val insult: Insult? by viewModel.insult.observeAsState()
             val name: String by viewModel.name.observeAsState("")
             val voice: Voice by viewModel.voice.observeAsState(Voice.exilzuerchere)
+            val loading: Boolean by viewModel.loading.observeAsState(false)
+            val error: Boolean by viewModel.error.observeAsState(false)
+
+            val scaffoldState: ScaffoldState = rememberScaffoldState()
+            if (error) {
+
+                // `LaunchedEffect` will cancel and re-launch if
+                // `scaffoldState.snackbarHostState` changes
+                LaunchedEffect(scaffoldState.snackbarHostState) {
+                    // Show snackbar using a coroutine, when the coroutine is cancelled the
+                    // snackbar will automatically dismiss. This coroutine will cancel whenever
+                    // `state.hasError` is false, and only start when `state.hasError` is true
+                    // (due to the above if-check), or if `scaffoldState.snackbarHostState` changes.
+                    val result = scaffoldState.snackbarHostState.showSnackbar(
+                        message = "W himutruurige Fähler isch passiert",
+                        actionLabel = "Nomou"
+                    )
+                    if (result == SnackbarResult.ActionPerformed) {
+                        viewModel.fetchInsultAndPlay(viewModel.insult.value?.id.toString())
+                    }
+                }
+            }
 
             MainScaffold(
+                scaffoldState = scaffoldState,
                 insult = insult,
                 name = name,
                 voice = voice,
+                loading,
                 onInsultClicked = {
                     viewModel.fetchInsultAndPlay()
                 },
