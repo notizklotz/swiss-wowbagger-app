@@ -13,6 +13,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.data.Insult
 import com.github.notizklotz.swisswowbagger.app.data.Voice
 
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
                     // `state.hasError` is false, and only start when `state.hasError` is true
                     // (due to the above if-check), or if `scaffoldState.snackbarHostState` changes.
                     val result = scaffoldState.snackbarHostState.showSnackbar(
-                        message = "W himutruurige Fähler isch passiert",
+                        message = getString(R.string.error),
                         actionLabel = "Nomou"
                     )
                     if (result == SnackbarResult.ActionPerformed) {

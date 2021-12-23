@@ -7,10 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
+import android.widget.Toast
 import com.github.notizklotz.swisswowbagger.app.InsultSpeechPlayer
 import com.github.notizklotz.swisswowbagger.app.R
 import com.github.notizklotz.swisswowbagger.app.data.InsultRepository
 import com.github.notizklotz.swisswowbagger.app.data.Voice
+import com.github.notizklotz.swisswowbagger.app.logError
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,9 +59,16 @@ class InsultWidget : AppWidgetProvider() {
         coroutineScope.launch {
             val insultTargetName = loadInsultTargetName(context, appWidgetId)
 
-            val insult = InsultRepository.getRandomInsult(insultTargetName)
+            try {
+                val insult = InsultRepository.getRandomInsult(insultTargetName)
+                InsultSpeechPlayer.play(insult.getAudioUrl(Voice.exilzuerchere))
+            } catch (e: Exception) {
+                logError { "Could not fetch insult" to e }
 
-            InsultSpeechPlayer.play(insult.getAudioUrl(Voice.exilzuerchere))
+                CoroutineScope(Dispatchers.Main).launch {
+                    Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }
