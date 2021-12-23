@@ -59,12 +59,6 @@
                     android:host="nidi3.github.io"
                     android:pathPrefix="/swiss-wowbagger" />
             </intent-filter>
-
-            <intent-filter>
-                <!-- Used in macrobenchmark-->
-                <action android:name="com.github.notizklotz.swisswowbagger.app.MAIN_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <provider
@@ -76,10 +70,5 @@
                 android:name="com.github.notizklotz.swisswowbagger.app.data.WowbaggerApiClientInitializer"
                 android:value="androidx.startup" />
         </provider>
-
-        <profileable
-            android:shell="true"
-            tools:targetApi="q" />
     </application>
-
 </manifest>

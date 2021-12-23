@@ -64,16 +64,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-        benchmark {
-            // duplicate any release build type settings for measurement accuracy,
-            // such as "minifyEnabled" and "proguardFiles" in this block
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            debuggable false
-            signingConfig signingConfigs.debug
-        }
-
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
