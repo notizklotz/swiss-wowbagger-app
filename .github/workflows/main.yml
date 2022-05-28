@@ -43,6 +43,7 @@ jobs:
         if: always()
         with:
           files: ./app/build/test-results/**/*.xml
+          comment_mode: off
 
       - name: GitHub Action for Android Lint
         uses: yutailang0119/action-android-lint@v3.0.0
