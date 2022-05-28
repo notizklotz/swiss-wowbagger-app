@@ -114,7 +114,7 @@ dependencies {
     testImplementation "androidx.test:core-ktx:1.4.0"
     testImplementation "androidx.test.ext:junit-ktx:$junit_ktx_version"
     testImplementation "androidx.test.ext:truth:$ext_truth_version"
-    testImplementation 'org.robolectric:robolectric:4.7.3'
+    testImplementation 'org.robolectric:robolectric:4.8.1'
     androidTestImplementation "androidx.test.ext:junit-ktx:$junit_ktx_version"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
