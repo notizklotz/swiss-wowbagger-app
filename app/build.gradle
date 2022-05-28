@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'io.github.reactivecircus.app-versioning' version '1.1.0'
+    id 'io.github.reactivecircus.app-versioning' version '1.1.2'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
