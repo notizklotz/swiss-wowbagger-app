@@ -14,3 +14,5 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    # Only security updates
+    open-pull-requests-limit: 0
