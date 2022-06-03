@@ -39,7 +39,7 @@ jobs:
           arguments: clean build assemble assembleAndroidTest bundle
 
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1.36
+        uses: EnricoMi/publish-unit-test-result-action@v1.37
         if: always()
         with:
           files: ./app/build/test-results/**/*.xml
