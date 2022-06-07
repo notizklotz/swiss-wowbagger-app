@@ -34,7 +34,7 @@ jobs:
           echo "keyAlias=${{ secrets.ALIAS }}" >> ./keystore.properties
 
       - name: Build app
-        uses: gradle/gradle-build-action@v2.1.7
+        uses: gradle/gradle-build-action@v2.2.0
         with:
           arguments: clean build assemble assembleAndroidTest bundle
 
