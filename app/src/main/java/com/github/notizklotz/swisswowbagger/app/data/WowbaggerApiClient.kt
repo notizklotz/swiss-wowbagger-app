@@ -6,11 +6,13 @@ import android.os.Build
 import androidx.annotation.VisibleForTesting
 import androidx.startup.Initializer
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.engine.okhttp.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.Serializable
 import java.util.concurrent.TimeUnit
 
@@ -35,7 +37,9 @@ class KtorWowbaggerApiClient(private val userAgentString: String): WowbaggerApiC
                 this.connectTimeout(4, TimeUnit.SECONDS)
             }
         }
-        install(JsonFeature)
+        install(ContentNegotiation) {
+            json()
+        }
         install(UserAgent) {
             agent = userAgentString
         }
@@ -45,11 +49,11 @@ class KtorWowbaggerApiClient(private val userAgentString: String): WowbaggerApiC
         return client.get(wowbaggerApiBaseUrl) {
             parameter("format", "json")
             parameter("names", name)
-        }
+        }.body()
     }
 
     override suspend fun getInsult(name: String, id: String): InsultResponse {
-        return client.get(Insult.createUrl(id, name))
+        return client.get(Insult.createUrl(id, name)).body()
     }
 }
 
