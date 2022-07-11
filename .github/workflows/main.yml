@@ -62,9 +62,9 @@ jobs:
           --type instrumentation --use-orchestrator \
           --app app/build/outputs/apk/debug/app-debug.apk \
           --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-          --device model=Nexus4,version=21,locale=de,orientation=portrait  \
-          --device model=heroqlteue,version=26,locale=en,orientation=portrait \
-          --device model=Pixel3,version=30,locale=de,orientation=landscape
+          --device model=starqlteue,version=26,locale=en,orientation=portrait \
+          --device model=q2q,version=30,locale=en,orientation=portrait \
+          --device model=Pixel6,version=32,locale=de,orientation=landscape
 
       - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
