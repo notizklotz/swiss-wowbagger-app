@@ -11,7 +11,7 @@ class InsultTest {
         val insult = Insult(1234, "Huere siech", "")
 
         assertThat(insult.getAudioUrl(Voice.exilzuerchere))
-            .isEqualTo(Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=&voice=exilzuerchere"))
+            .isEqualTo(Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?v=undefined&names=&voice=exilzuerchere&format=wav"))
     }
 
     @Test
@@ -19,7 +19,7 @@ class InsultTest {
         val insult = Insult(1234, "Huere siech", "myname")
 
         assertThat(insult.getAudioUrl(Voice.exilzuerchere))
-            .isEqualTo(Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=myname&voice=exilzuerchere"))
+            .isEqualTo(Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?v=undefined&names=myname&voice=exilzuerchere&format=wav"))
     }
 
     @Test
@@ -27,6 +27,6 @@ class InsultTest {
         val insult = Insult(1234, "Huere siech", "myname othername")
 
         assertThat(insult.getAudioUrl(Voice.exilzuerchere))
-            .isEqualTo(Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?format=wav&v=undefined&names=myname+othername&voice=exilzuerchere"))
+            .isEqualTo(Url("https://swiss-wowbagger-ultgi7by3q-oa.a.run.app/1234?v=undefined&names=myname+othername&voice=exilzuerchere&format=wav"))
     }
 }
