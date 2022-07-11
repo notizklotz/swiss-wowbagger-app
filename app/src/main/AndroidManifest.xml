@@ -10,7 +10,6 @@
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SwissWowbaggerApp">
 
@@ -37,7 +36,6 @@
         <activity
             android:name=".main.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.SwissWowbaggerApp.NoActionBar">
             <tools:validation testUrl="https://nidi3.github.io/swiss-wowbagger/#1639916303722" />

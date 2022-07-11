@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.widget.RemoteViews
 import android.widget.Toast
 import com.github.notizklotz.swisswowbagger.app.InsultSpeechPlayer
@@ -92,15 +91,11 @@ internal fun updateAppWidget(
     intent.action = INTENT_ACTION_INSTANT_INSULT_PLAY
     intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
 
-    val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
-    } else PendingIntent.FLAG_CANCEL_CURRENT
-
     val actionPendingIntent = PendingIntent.getBroadcast(
         context,
         appWidgetId,
         intent,
-        flags
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
     )
 
     val widgetText = loadInsultTargetName(context, appWidgetId)
