@@ -35,8 +35,7 @@ data class Insult(val id: Long, val text: String, val name: String) {
         .applyCommon(voice)
         .apply {
             parameters["format"] = "wav"
-            pathComponents(id.toString())
-        }
+        }.appendPathSegments(id.toString())
         .build()
 
     private fun URLBuilder.applyCommon(voice: Voice) = apply {
@@ -50,8 +49,8 @@ data class Insult(val id: Long, val text: String, val name: String) {
             parameters["v"] = "undefined"
             parameters["names"] = name
             parameters["format"] = "json"
-            pathComponents(id)
-        }.build()
+        }.appendPathSegments(id)
+        .build()
     }
 
 }
