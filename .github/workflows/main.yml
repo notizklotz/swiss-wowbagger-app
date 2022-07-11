@@ -64,7 +64,7 @@ jobs:
           --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
           --device model=starqlteue,version=26,locale=en,orientation=portrait \
           --device model=q2q,version=30,locale=en,orientation=portrait \
-          --device model=Pixel6,version=32,locale=de,orientation=landscape
+          --device model=oriole,version=32,locale=de,orientation=landscape
 
       - uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
